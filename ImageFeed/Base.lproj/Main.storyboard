@@ -67,7 +67,7 @@
                                         <connections>
                                             <outlet property="cellImage" destination="buL-OM-Q71" id="cfc-X8-FGG"/>
                                             <outlet property="dataLabel" destination="cTW-wN-Khv" id="SGQ-MN-H39"/>
-                                            <outlet property="favoriteSight" destination="7Yo-RR-bgx" id="xIQ-ke-Iez"/>
+                                            <outlet property="favoriteSign" destination="7Yo-RR-bgx" id="xIQ-ke-Iez"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
