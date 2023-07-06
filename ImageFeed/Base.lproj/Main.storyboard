@@ -28,7 +28,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="428" height="222"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="buL-OM-Q71">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="7" translatesAutoresizingMaskIntoConstraints="NO" id="buL-OM-Q71">
                                                     <rect key="frame" x="20" y="11" width="388" height="200"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -64,6 +64,11 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="buL-OM-Q71" secondAttribute="trailing" id="x5v-A5-1yK"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellImage" destination="buL-OM-Q71" id="cfc-X8-FGG"/>
+                                            <outlet property="dataLabel" destination="cTW-wN-Khv" id="SGQ-MN-H39"/>
+                                            <outlet property="favoriteSight" destination="7Yo-RR-bgx" id="xIQ-ke-Iez"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -91,10 +96,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="0" width="200" height="132"/>
+        <image name="7" width="200" height="133"/>
         <image name="Active" width="44" height="44"/>
         <namedColor name="YP Black">
-            <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="YP White ">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
