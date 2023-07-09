@@ -8,20 +8,26 @@
 import UIKit
 
 class ImagesListViewController: UIViewController {
-
+    
+    // MARK: - • IBOutlet
+    
     @IBOutlet private var tableView: UITableView!
-
+    
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         return formatter
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
+    
+    // MARK: - Private Varibles
+      
+    
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)"}
 }
@@ -53,7 +59,7 @@ extension ImagesListViewController {
         cell.dataLabel.text = dateFormatter.string(from: Date())
         
         let isFavorite = indexPath.row % 2 == 0
-        let favoriteImage = isFavorite ? UIImage(named: "Active") : UIImage(named: "No_Active")
+        let favoriteImage = isFavorite ? UIImage(named: "No_Active") : UIImage(named: "Active")
         cell.favoriteSign.setImage(favoriteImage, for: .normal)
     }
 }

@@ -7,13 +7,12 @@
 
 import UIKit
 
-
- class ImagesListCell: UITableViewCell {
-    
-     @IBOutlet weak var cellImage: UIImageView!
-     @IBOutlet weak var favoriteSign: UIButton!
-     @IBOutlet weak var dataLabel: UILabel!
-    
+final class ImagesListCell: UITableViewCell {
+   
     static let reuseIdentifier = "ImagesListCell"
+    
+    @IBOutlet weak var cellImage: UIImageView!
+    @IBOutlet weak var favoriteSign: UIButton!
+    @IBOutlet weak var dataLabel: UILabel!
     
 }
