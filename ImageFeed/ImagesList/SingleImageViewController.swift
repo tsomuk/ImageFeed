@@ -10,9 +10,7 @@ import UIKit
 
 final class SingleImageViewController : UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
-   
-
-    
+    @IBOutlet weak var backButton: UIButton!
     
     var image: UIImage! {
         didSet {
@@ -30,6 +28,10 @@ final class SingleImageViewController : UIViewController {
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         rescaleAndCenterImageInScrollView(image: image)
+    }
+   
+    @IBAction func didTapBackButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func sharingButtonTapped(_ sender: UIButton) {
@@ -55,14 +57,8 @@ final class SingleImageViewController : UIViewController {
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
-        
-        
     }
-    
-    
-    
 }
-
 
 extension SingleImageViewController : UIScrollViewDelegate  {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

@@ -23,7 +23,6 @@ final class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-  
     }
     
     // MARK: - Private Varibles
@@ -81,9 +80,6 @@ extension ImagesListViewController: UITableViewDelegate {
     }
 }
 
-
-
-
 extension ImagesListViewController {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
@@ -96,9 +92,4 @@ extension ImagesListViewController {
         let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
         return cellHeight
     }
-    
-    
-
-    
-    
 }
