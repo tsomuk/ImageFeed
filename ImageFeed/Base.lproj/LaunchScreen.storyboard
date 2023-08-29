@@ -22,7 +22,7 @@
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" name="YP Black"/>
+                        <color key="backgroundColor" name="ypBlack"/>
                         <constraints>
                             <constraint firstItem="eV3-bu-8RE" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="CAs-jd-VfH"/>
                             <constraint firstItem="eV3-bu-8RE" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="LNz-IE-Y89"/>
@@ -38,8 +38,8 @@
     </scenes>
     <resources>
         <image name="launchLogo" width="75" height="78"/>
-        <namedColor name="YP Black">
-            <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="ypBlack">
+            <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
