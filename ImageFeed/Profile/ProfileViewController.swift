@@ -20,7 +20,7 @@ final class ProfileViewController: UIViewController {
     }
     func prepareUI() {
         // MARK: - image
-        let userPickImageView = UIImageView(image: UIImage(named: "Userpick"))
+        let userPickImageView = UIImageView(image: UIImage(named: "userPic"))
 //        userPickImageView.tintColor = .gray
         userPickImageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
         userPickImageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
