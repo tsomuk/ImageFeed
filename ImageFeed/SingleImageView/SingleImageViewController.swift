@@ -35,7 +35,8 @@ final class SingleImageViewController : UIViewController {
     }
     
     @IBAction func sharingButtonTapped(_ sender: UIButton) {
-        let activityController = UIActivityViewController(
+        guard let image = image else { return }
+              let activityController = UIActivityViewController(
             activityItems: [image],
             applicationActivities: nil
         )
@@ -48,11 +49,13 @@ final class SingleImageViewController : UIViewController {
         view.layoutIfNeeded()
         let visibleRectSize = scrollView.bounds.size
         let imageSize = image.size
-        let hScale = visibleRectSize.width
-        let vScale = visibleRectSize.height
+        let hScale = visibleRectSize.height / imageSize.height
+        let vScale = visibleRectSize.width / imageSize.width
         let scale = min(maxZoomScale, max(minZoomScale,max(hScale,vScale)))
+        
         scrollView.setZoomScale(scale, animated: false)
         scrollView.layoutIfNeeded()
+        
         let newContentSize = scrollView.contentSize
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
