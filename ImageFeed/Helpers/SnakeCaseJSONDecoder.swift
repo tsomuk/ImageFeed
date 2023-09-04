@@ -8,8 +8,8 @@
 import Foundation
 
 class SnakeCaseJSONDecoder: JSONDecoder {
-  override init() {
-    super.init()
-    keyDecodingStrategy = .convertFromSnakeCase
-  }
+    override init() {
+        super.init()
+        keyDecodingStrategy = .convertFromSnakeCase
+    }
 }

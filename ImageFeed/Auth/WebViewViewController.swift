@@ -80,16 +80,16 @@ final class WebViewViewController: UIViewController {
         delegate?.webViewViewControllerDidCancel(self)
     }
 }
-    // MARK: - WebView
+// MARK: - WebView
 
 extension WebViewViewController {
     func requestWebView() {
         var urlComponents = URLComponents(string: WebConstant.authURL)!
         urlComponents.queryItems = [
-            URLQueryItem(name: WebKeyConstant.clientID, value: AccessKey),
-            URLQueryItem(name: WebKeyConstant.redirectURI, value: RedirectURI),
+            URLQueryItem(name: WebKeyConstant.clientID, value: accessKey),
+            URLQueryItem(name: WebKeyConstant.redirectURI, value: redirectURI),
             URLQueryItem(name: WebKeyConstant.responseType, value: WebConstant.code),
-            URLQueryItem(name: WebKeyConstant.scope, value: AccessScope)
+            URLQueryItem(name: WebKeyConstant.scope, value: accessScope)
         ]
         let url = urlComponents.url!
         let request = URLRequest(url: url)

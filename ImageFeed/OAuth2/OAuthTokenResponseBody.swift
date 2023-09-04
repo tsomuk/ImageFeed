@@ -12,5 +12,4 @@ struct OAuthTokenResponseBody: Decodable {
     var tokenType : String
     var scope: String
     var createdAt : Int
-  
 }

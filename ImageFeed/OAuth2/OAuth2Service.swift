@@ -7,15 +7,12 @@
 
 import Foundation
 
-
 // MARK: - OAuth2Service
 
 final class OAuth2Service {
-    
     private let urlSession = URLSession.shared
     static let shared = OAuth2Service()
     private init() { }
-    
 }
 
 private extension OAuth2Service {
@@ -65,9 +62,9 @@ private extension OAuth2Service {
         guard let url = URL(string: OAuth2Constants.tokenRequestURLString) else { preconditionFailure("Cannot make url") }
         return URLRequest.makeHTTPRequest(
             path: OAuth2Constants.tokenRequestPathString
-            + "?client_id=\(AccessKey)"
-            + "&&client_secret=\(SecretKey)"
-            + "&&redirect_uri=\(RedirectURI)"
+            + "?client_id=\(accessKey)"
+            + "&&client_secret=\(secretKey)"
+            + "&&redirect_uri=\(redirectURI)"
             + "&&code=\(code)"
             + "&&grant_type=\(OAuth2Constants.tokenRequestGrantTypeString)",
             httpMethod: OAuth2Constants.tokenRequestMethodString,
