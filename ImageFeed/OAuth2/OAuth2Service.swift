@@ -7,6 +7,22 @@
 
 import Foundation
 
+// MARK: - Constants
+
+struct OAuth2Constants {
+    static let tokenURLString = "https://unsplash.com/oauth/token"
+    static let tokenRequestURLString = "https://unsplash.com"
+    static let tokenRequestPathString = "/oauth/token"
+    static let tokenRequestMethodString = "POST"
+    static let tokenRequestGrantTypeString = "authorization_code"
+    
+    static let clientID = "client_id"
+    static let clientSecret = "client_secret"
+    static let redirectURI = "redirect_uri"
+    static let grandType = "grant_type"
+    static let code = "code"
+}
+
 // MARK: - OAuth2Service
 
 final class OAuth2Service {
@@ -16,14 +32,7 @@ final class OAuth2Service {
 }
 
 private extension OAuth2Service {
-    enum OAuth2Constants {
-        static let tokenURLString = "https://unsplash.com/oauth/token"
-        static let tokenRequestURLString = "https://unsplash.com"
-        static let tokenRequestPathString = "/oauth/token"
-        static let tokenRequestMethodString = "POST"
-        static let tokenRequestGrantTypeString = "authorization_code"
-    }
-    
+   
     enum NetworkError: Error {
         case codeError
     }
@@ -59,39 +68,49 @@ private extension OAuth2Service {
     }
     
     func authTokenRequest(code: String) -> URLRequest {
-        guard let url = URL(string: OAuth2Constants.tokenRequestURLString) else { preconditionFailure("Cannot make url") }
-        return URLRequest.makeHTTPRequest(
-            path: OAuth2Constants.tokenRequestPathString
-            + "?client_id=\(accessKey)"
-            + "&&client_secret=\(secretKey)"
-            + "&&redirect_uri=\(redirectURI)"
-            + "&&code=\(code)"
-            + "&&grant_type=\(OAuth2Constants.tokenRequestGrantTypeString)",
-            httpMethod: OAuth2Constants.tokenRequestMethodString,
-            baseURL: url)
+        guard let url = URL(string: OAuth2Constants.tokenRequestURLString) else { preconditionFailure("Can't make url")
+        }
+        
+        var urlComponents = URLComponents(string: OAuth2Constants.tokenURLString)!
+        urlComponents.queryItems = [
+            URLQueryItem(name: OAuth2Constants.clientID, value: accessKey),
+            URLQueryItem(name: OAuth2Constants.clientSecret, value: secretKey),
+            URLQueryItem(name: OAuth2Constants.redirectURI, value: redirectURI),
+            URLQueryItem(name: OAuth2Constants.code, value: code),
+            URLQueryItem(name: OAuth2Constants.grandType, value: "authorization_code")
+        ]
+        
+        guard let urlWithQuery = urlComponents.url else {
+                preconditionFailure("Не удается создать URL с параметрами")
+            }
+
+            var request = URLRequest(url: urlWithQuery)
+            request.httpMethod = OAuth2Constants.tokenRequestMethodString
+
+            return request
     }
 }
-
-// MARK: - OAuth2Service - AuthRouting
-
-extension OAuth2Service {
-    func fetchAuthToken(with code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let completionOnMainQueue: (Result<String, Error>) -> Void = { result in
-            DispatchQueue.main.async {
-                completion(result)
+    // MARK: - OAuth2Service - AuthRouting
+    
+    extension OAuth2Service {
+        func fetchAuthToken(with code: String, completion: @escaping (Result<String, Error>) -> Void) {
+            let completionOnMainQueue: (Result<String, Error>) -> Void = { result in
+                DispatchQueue.main.async {
+                    completion(result)
+                }
             }
-        }
-        let request = authTokenRequest(code: code)
-        let task = fetchOAuthTokenResponseBody(for: request) { [weak self] result in
-            guard let self else { preconditionFailure("Cannot make weak link") }
-            switch result {
-            case .success(let body):
-                self.authToken = body.accessToken
-                completionOnMainQueue(.success(body.accessToken))
-            case .failure(let error):
-                completionOnMainQueue(.failure(error))
+            let request = authTokenRequest(code: code)
+            let task = fetchOAuthTokenResponseBody(for: request) { [weak self] result in
+                guard let self else { preconditionFailure("Cannot make weak link") }
+                switch result {
+                case .success(let body):
+                    self.authToken = body.accessToken
+                    completionOnMainQueue(.success(body.accessToken))
+                case .failure(let error):
+                    completionOnMainQueue(.failure(error))
+                }
             }
+            task.resume()
         }
-        task.resume()
     }
-}
+

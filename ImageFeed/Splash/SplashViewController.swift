@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class SplashViewController: UIViewController {
     
@@ -15,10 +16,12 @@ final class SplashViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
       super.viewDidAppear(true)
-      if oAuth2TokenStorage.token == nil {
-        performSegue(withIdentifier: showAuthViewSegueIdentifier, sender: nil)
+      if let token = oAuth2TokenStorage.token {
+          print("✅ Token: \(token)")
+          switchToTabBarController()
       } else {
-        switchToTabBarController()
+          print("❌ Token missing")
+          performSegue(withIdentifier: showAuthViewSegueIdentifier, sender: nil)
       }
     }
 
@@ -45,27 +48,30 @@ final class SplashViewController: UIViewController {
         .instantiateViewController(withIdentifier: "TabBarViewController")
       window.rootViewController = tabBarController
     }
-
-    func fetchAuthToken(with code: String) {
-      oAuth2Service.fetchAuthToken(with: code) { [weak self] result in
-        guard let self else { preconditionFailure("Cannot make weak link") }
-        switch result {
-        case .success(let result):
-          print("ITS LIT \(result)")
-          dismiss(animated: true)
-          self.switchToTabBarController()
-        case .failure(let error):
-          print("The error \(error)")
-        }
+      
+      func fetchAuthToken(with code: String) {
+          oAuth2Service.fetchAuthToken(with: code) { [weak self] result in
+              guard let self else { preconditionFailure("Cannot make weak link") }
+              switch result {
+              case .success(let result):
+                  print("❇️ New token: \(result)")
+                  dismiss(animated: true)
+                  self.switchToTabBarController()
+                  ProgressHUD.dismiss()
+              case .failure(let error):
+                  print("The error \(error)")
+                  ProgressHUD.dismiss()
+              }
+          }
       }
-    }
   }
 
   // MARK: - AuthViewControllerDelegate
 
   extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ viewController: AuthViewController, didAuthenticateWithCode code: String) {
-      fetchAuthToken(with: code)
+        ProgressHUD.show()
+        fetchAuthToken(with: code)
     }
   }
 
