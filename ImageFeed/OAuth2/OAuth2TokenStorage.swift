@@ -14,6 +14,9 @@ protocol TokenStorage {
 // MARK: - OAuth2TokenStorage
 
 final class OAuth2TokenStorage {
+    
+    static let shared = OAuth2TokenStorage()
+    
   private enum Keys: String {
     case token
   }

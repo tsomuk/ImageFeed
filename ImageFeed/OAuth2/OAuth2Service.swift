@@ -10,11 +10,11 @@ import Foundation
 // MARK: - Constants
 
 struct OAuth2Constants {
-    static let tokenURLString = "https://unsplash.com/oauth/token"
-    static let tokenRequestURLString = "https://unsplash.com"
-    static let tokenRequestPathString = "/oauth/token"
-    static let tokenRequestMethodString = "POST"
-    static let tokenRequestGrantTypeString = "authorization_code"
+    static let authTokenURL = "https://unsplash.com/oauth/token"
+    static let requestURL = "https://unsplash.com"
+    static let requestPath = "/oauth/token"
+    static let requestMethod = "POST"
+    static let requestGrantType = "authorization_code"
     
     static let clientID = "client_id"
     static let clientSecret = "client_secret"
@@ -26,17 +26,23 @@ struct OAuth2Constants {
 // MARK: - OAuth2Service
 
 final class OAuth2Service {
-    private let urlSession = URLSession.shared
+    
+    private let urlSession: URLSession
+    private var storage: OAuth2TokenStorage
+    private var task : URLSessionTask?
+    private var lastCode : String?
+    
     static let shared = OAuth2Service()
-    private init() { }
+    
+    init(urlSession: URLSession = .shared, storage: OAuth2TokenStorage = .shared) {
+        self.urlSession = urlSession
+        self.storage = storage
+        
+    }
 }
 
 private extension OAuth2Service {
-   
-    enum NetworkError: Error {
-        case codeError
-    }
-    
+
     var authToken: String? {
         get {
             return OAuth2TokenStorage().token
@@ -47,70 +53,61 @@ private extension OAuth2Service {
     }
 }
 
-// MARK: - OAuth2Service
 
-private extension OAuth2Service {
-    func fetchOAuthTokenResponseBody(
-        for request: URLRequest, completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void
-    ) -> URLSessionTask {
-        let completionOnMainQueue: (Result<OAuthTokenResponseBody, Error>) -> Void = { result in
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-        let decoder = SnakeCaseJSONDecoder()
-        return urlSession.fetchData(for: request) { (result: Result<Data, Error>) in
-            let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in
-                Result { try decoder.decode(OAuthTokenResponseBody.self, from: data) }
-            }
-            completionOnMainQueue(response)
-        }
-    }
+// MARK: - OAuth2Service - fetchAuthToken
+
+extension OAuth2Service {
     
-    func authTokenRequest(code: String) -> URLRequest {
-        guard let url = URL(string: OAuth2Constants.tokenRequestURLString) else { preconditionFailure("Can't make url")
+    func fetchAuthToken(with code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
+        assert(Thread.isMainThread)
+        guard code != lastCode else { return }
+        task?.cancel()
+        lastCode = code
+        
+        guard let request = makeRequest(code: code) else {
+            assertionFailure("Error Reguest")
+            completion(.failure(NetworkError.invalidRequest))
+            return
         }
         
-        var urlComponents = URLComponents(string: OAuth2Constants.tokenURLString)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: OAuth2Constants.clientID, value: accessKey),
-            URLQueryItem(name: OAuth2Constants.clientSecret, value: secretKey),
-            URLQueryItem(name: OAuth2Constants.redirectURI, value: redirectURI),
-            URLQueryItem(name: OAuth2Constants.code, value: code),
-            URLQueryItem(name: OAuth2Constants.grandType, value: "authorization_code")
-        ]
+        task = urlSession.objectTask(for: request) {
+            [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
+            guard let self else { preconditionFailure("Can't make weak link") }
+            self.task = nil
+            switch result {
+            case .success(let body):
+                let authToken = body.accessToken
+                self.storage.token = authToken
+                completion(.success(authToken))
+            case .failure(let error):
+                self.lastCode = nil
+                completion(.failure(error))
+            }
+        }
         
-        guard let urlWithQuery = urlComponents.url else {
+        
+        func makeRequest(code: String) -> URLRequest? {
+            
+            var urlComponents = URLComponents(string: OAuth2Constants.authTokenURL)
+            urlComponents?.queryItems = [
+                URLQueryItem(name: OAuth2Constants.clientID, value: accessKey),
+                URLQueryItem(name: OAuth2Constants.clientSecret, value: secretKey),
+                URLQueryItem(name: OAuth2Constants.redirectURI, value: redirectURI),
+                URLQueryItem(name: OAuth2Constants.code, value: code),
+                URLQueryItem(name: OAuth2Constants.grandType, value: OAuth2Constants.requestGrantType)
+            ]
+            
+            guard let urlWithQuery = urlComponents?.url else {
                 preconditionFailure("Не удается создать URL с параметрами")
             }
-
+            
             var request = URLRequest(url: urlWithQuery)
-            request.httpMethod = OAuth2Constants.tokenRequestMethodString
-
+            request.httpMethod = OAuth2Constants.requestMethod
+            
             return request
-    }
-}
-    // MARK: - OAuth2Service - AuthRouting
-    
-    extension OAuth2Service {
-        func fetchAuthToken(with code: String, completion: @escaping (Result<String, Error>) -> Void) {
-            let completionOnMainQueue: (Result<String, Error>) -> Void = { result in
-                DispatchQueue.main.async {
-                    completion(result)
-                }
-            }
-            let request = authTokenRequest(code: code)
-            let task = fetchOAuthTokenResponseBody(for: request) { [weak self] result in
-                guard let self else { preconditionFailure("Cannot make weak link") }
-                switch result {
-                case .success(let body):
-                    self.authToken = body.accessToken
-                    completionOnMainQueue(.success(body.accessToken))
-                case .failure(let error):
-                    completionOnMainQueue(.failure(error))
-                }
-            }
-            task.resume()
         }
     }
+}
+
 

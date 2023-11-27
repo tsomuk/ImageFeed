@@ -70,6 +70,9 @@ final class SplashViewController: UIViewController {
 
   extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ viewController: AuthViewController, didAuthenticateWithCode code: String) {
+        
+        ProgressHUD.animationType = .circleRotateChase
+        ProgressHUD.colorHUD = .clear
         ProgressHUD.show()
         fetchAuthToken(with: code)
     }

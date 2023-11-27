@@ -30,7 +30,7 @@ final class WebViewViewController: UIViewController {
         static let autorizedPath = "/oauth/authorize/native"
         static let code = "code"
     }
-      
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self

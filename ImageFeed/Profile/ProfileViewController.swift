@@ -34,7 +34,7 @@ final class ProfileViewController: UIViewController {
         
         // MARK: - Label - Name
         let userNameLabel = UILabel()
-        userNameLabel.text = "Tsomuk  Nikita"
+        userNameLabel.text = "Tsomuk  Nikita_mock"
         userNameLabel.textColor = .ypWhite
         userNameLabel.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +45,7 @@ final class ProfileViewController: UIViewController {
         
         // MARK: - Label - login
         let loginLabel = UILabel()
-        loginLabel.text = "@tsomuk"
+        loginLabel.text = "@tsomuk_mock"
         loginLabel.font = UIFont.systemFont(ofSize: 13)
         loginLabel.textColor = .ypGray
         loginLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +56,7 @@ final class ProfileViewController: UIViewController {
         
         // MARK: - Label - message
         let descriptionLabel = UILabel()
-        descriptionLabel.text = "Hello world"
+        descriptionLabel.text = "Hello world_mock"
         descriptionLabel.font = UIFont.systemFont(ofSize: 13)
         descriptionLabel.textColor = .ypWhite
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
