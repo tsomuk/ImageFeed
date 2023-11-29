@@ -17,5 +17,8 @@ public let defaultBaseURL = URL(string: "https://api.unsplash.com/")!
 
 
 public enum Constants {
-   static let secretKey: String = "Nt04IHldFukSep8Cbvy4w2Spkp9B33bfEmcMSN5Z3zU"
+    static let defaultApiBaseURLString = "https://api.unsplash.com"
+    static let secretKey: String = "Nt04IHldFukSep8Cbvy4w2Spkp9B33bfEmcMSN5Z3zU"
+    static let profileRequestPathString = "/me"
+    static let getMethodString = "GET"
 }

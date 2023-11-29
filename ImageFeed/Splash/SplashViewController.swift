@@ -57,10 +57,10 @@ final class SplashViewController: UIViewController {
                   print("❇️ New token: \(result)")
                   dismiss(animated: true)
                   self.switchToTabBarController()
-                  ProgressHUD.dismiss()
+                  UIBlockingProgressHUD.dismiss()
               case .failure(let error):
                   print("The error \(error)")
-                  ProgressHUD.dismiss()
+                  UIBlockingProgressHUD.dismiss()
               }
           }
       }
@@ -71,9 +71,8 @@ final class SplashViewController: UIViewController {
   extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ viewController: AuthViewController, didAuthenticateWithCode code: String) {
         
-        ProgressHUD.animationType = .circleRotateChase
-        ProgressHUD.colorHUD = .clear
-        ProgressHUD.show()
+        
+        UIBlockingProgressHUD.show()
         fetchAuthToken(with: code)
     }
   }

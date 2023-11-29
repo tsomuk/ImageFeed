@@ -64,6 +64,7 @@ extension OAuth2Service {
         guard code != lastCode else { return }
         task?.cancel()
         lastCode = code
+        print("✅", "LastCode:",lastCode)
         
         guard let request = makeRequest(code: code) else {
             assertionFailure("Error Reguest")
