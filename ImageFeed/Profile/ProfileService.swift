@@ -53,7 +53,7 @@ extension ProfileService: ProfileLoading {
 
     let session = URLSession.shared
     currentTask = session.objectTask(for: request) {
-      [weak self] (result: Result<ProfileResults, Error>) in
+      [weak self] (result: Result<ProfileResult, Error>) in
 
       guard let self else { preconditionFailure("Cannot make weak link") }
 

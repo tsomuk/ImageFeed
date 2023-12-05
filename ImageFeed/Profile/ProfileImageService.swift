@@ -35,6 +35,9 @@ private extension ProfileImageService {
 // MARK: - ProfileLoading
 
 extension ProfileImageService: ProfileImageLoading {
+    
+    
+    
 
   func fetchProfileImageURL(userName: String, completion: @escaping (Result<String, Error>) -> Void) {
 
@@ -49,7 +52,7 @@ extension ProfileImageService: ProfileImageLoading {
     }
 
     let task = session.objectTask(for: request) {
-      [weak self] (result: Result<ProfileResults, Error>) in
+      [weak self] (result: Result<ProfileResult, Error>) in
 
       guard let self else { preconditionFailure("Cannot make weak link") }
 

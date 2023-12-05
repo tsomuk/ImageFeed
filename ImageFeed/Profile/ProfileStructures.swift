@@ -7,44 +7,40 @@
 
 import Foundation
 
-struct ProfileResults : Codable {
-    var userLogin    : String
-    var firstName    : String?
-    var lastName     : String?
-    var bio          : String?
-    var profileImage : ProfileImage?
-    
-    private enum CodingKeys: String, CodingKey {
-        case userLogin    = "username"
-        case firstName    = "first_name"
-        case lastName     = "last_name"
-        case bio
-        case profileImage = "profile_image"
-    }
-    
-    struct ProfileImage: Codable {
-        let small : String?
-        let medium : String?
-        let large : String?
-    }
-    
+struct ProfileResult: Codable {
+    let username: String
+    let firstName: String?
+    let lastName: String?
+    let bio: String?
+    let profileImage: ProfileImage?
 }
 
-struct Profile : Codable {
-    var username  : String
-    var name      : String
-    var loginName : String
-    var bio       : String?
+struct Profile {
+  let username: String
+  let name: String
+  let loginName: String
+  let bio: String?
 }
+
+struct ProfileImage: Codable {
+  let small: String?
+  let medium: String?
+  let large: String?
+}
+
+
+
+
+// MARK: - Init for ProfileResult
 
 extension Profile {
-    init(result profile: ProfileResults) {
-        self.init(
-            username: profile.userLogin,
-            name: "\(profile.firstName ?? "") \(profile.lastName ?? "")",
-            loginName: "@\(profile.userLogin)",
-            bio: profile.bio
-        )
-    } 
-}
 
+  init(result profile: ProfileResult) {
+    self.init(
+      username: profile.username,
+      name: "\(profile.firstName ?? "") \(profile.lastName ?? "")",
+      loginName: "@\(profile.username)",
+      bio: profile.bio
+    )
+  }
+}

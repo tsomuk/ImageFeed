@@ -39,6 +39,10 @@ final class OAuth2Service {
         self.storage = storage
         
     }
+    
+    var isAuthenticated: Bool {
+        storage.token != nil
+    }
 }
 
 private extension OAuth2Service {
