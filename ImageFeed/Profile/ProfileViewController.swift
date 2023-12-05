@@ -151,6 +151,7 @@ final class ProfileViewController: UIViewController {
         print("LogOut Button")
         resetToken()
         resetView()
+        switchToSplashVC()
     }
     
 }
@@ -159,7 +160,6 @@ final class ProfileViewController: UIViewController {
 private extension ProfileViewController {
     
     func resetToken() {
-        
         guard storage.removeToken() else {
             assertionFailure("Can't remove token")
             return
@@ -171,6 +171,12 @@ private extension ProfileViewController {
         self.loginLabel.text = "@login"
         self.descriptionLabel.text = "bio info"
         self.userPickImageView.image = UIImage(systemName: "person.crop.circle.fill")
+    }
+    
+    func switchToSplashVC() {
+        guard let window = UIApplication.shared.windows.first else { preconditionFailure("Invalid Configuration") }
+        let splashViewController = SplashViewController()
+        window.rootViewController = splashViewController
     }
 }
 

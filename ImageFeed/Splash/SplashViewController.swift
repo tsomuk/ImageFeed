@@ -30,7 +30,7 @@ final class SplashViewController: UIViewController {
   }
 
   // MARK: - Lifecycle
-
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     alertPresenter = AlertPresenter(viewController: self)
@@ -85,6 +85,7 @@ private extension SplashViewController {
 
 private extension SplashViewController {
 
+
   func showAuthViewController() {
     let storyboard = UIStoryboard(name: "Main", bundle: .main)
     let viewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
@@ -102,8 +103,7 @@ private extension SplashViewController {
   }
 
   func setupSplashViewController() {
-    view.backgroundColor = .ypBackground
-
+    view.backgroundColor = .ypBlack
     view.addSubview(unsplashLogoImage)
 
     NSLayoutConstraint.activate([
@@ -181,3 +181,6 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
   }
 }
+
+
+
