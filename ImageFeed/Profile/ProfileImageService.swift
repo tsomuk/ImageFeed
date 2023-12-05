@@ -36,8 +36,6 @@ private extension ProfileImageService {
 
 extension ProfileImageService: ProfileImageLoading {
     
-    
-    
 
   func fetchProfileImageURL(userName: String, completion: @escaping (Result<String, Error>) -> Void) {
 

@@ -149,6 +149,28 @@ final class ProfileViewController: UIViewController {
     @objc
     private func didTapButton() {
         print("LogOut Button")
+        resetToken()
+        resetView()
     }
     
 }
+
+
+private extension ProfileViewController {
+    
+    func resetToken() {
+        
+        guard storage.removeToken() else {
+            assertionFailure("Can't remove token")
+            return
+        }
+    }
+    
+    func resetView() {
+        self.userNameLabel.text = "User Name"
+        self.loginLabel.text = "@login"
+        self.descriptionLabel.text = "bio info"
+        self.userPickImageView.image = UIImage(systemName: "person.crop.circle.fill")
+    }
+}
+
