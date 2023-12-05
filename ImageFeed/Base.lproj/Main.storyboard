@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Afy-ZN-qws">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -171,18 +171,18 @@
             <objects>
                 <viewController storyboardIdentifier="AuthViewController" id="cx0-X3-XUB" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0Qf-j6-raS">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_of_Unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="iOD-Mz-jlP">
-                                <rect key="frame" x="166.66666666666666" y="391" width="60" height="60"/>
+                                <rect key="frame" x="166.66666666666666" y="396" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="E4Q-Up-Z9O"/>
                                     <constraint firstAttribute="height" constant="60" id="i6s-xH-uig"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPa-OA-n8j">
-                                <rect key="frame" x="16" y="704" width="361" height="48"/>
+                                <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="ypWhite "/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="K10-iu-g7j"/>
@@ -225,7 +225,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Zx6-hN-r1N"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IPU-7J-MJs">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -293,33 +293,6 @@
             </objects>
             <point key="canvasLocation" x="526" y="939"/>
         </scene>
-        <!--Splash View Controller-->
-        <scene sceneID="g8Z-Wi-MQT">
-            <objects>
-                <viewController id="Afy-ZN-qws" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="hbv-MY-cDm">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ZyD-Cw-4Of">
-                                <rect key="frame" x="159" y="387" width="75" height="78"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="lND-7h-zJ1"/>
-                        <color key="backgroundColor" name="ypBlack"/>
-                        <constraints>
-                            <constraint firstItem="ZyD-Cw-4Of" firstAttribute="centerX" secondItem="hbv-MY-cDm" secondAttribute="centerX" id="dxG-td-vso"/>
-                            <constraint firstItem="ZyD-Cw-4Of" firstAttribute="centerY" secondItem="hbv-MY-cDm" secondAttribute="centerY" id="s9I-7y-o4M"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <segue destination="KwI-sk-eDh" kind="show" identifier="ShowAuthenticationScreen" id="tAr-6I-9ow"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DhG-9U-0Ns" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2395" y="939"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="YXY-tq-7aL">
             <objects>
@@ -347,7 +320,6 @@
         <image name="Backward" width="24" height="24"/>
         <image name="Logo_of_Unsplash" width="60" height="60"/>
         <image name="Sharing" width="50.333332061767578" height="50"/>
-        <image name="launchLogo" width="75" height="78"/>
         <image name="nav_back_button_black" width="24" height="24"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <namedColor name="YP Black">
