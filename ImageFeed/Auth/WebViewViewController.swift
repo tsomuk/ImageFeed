@@ -30,7 +30,7 @@ final class WebViewViewController: UIViewController {
         static let autorizedPath = "/oauth/authorize/native"
         static let code = "code"
     }
-      
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
@@ -97,7 +97,6 @@ extension WebViewViewController {
     }
 }
 
-
 extension WebViewViewController: WKNavigationDelegate {
     func webView(
         _ webView: WKWebView,
@@ -107,7 +106,6 @@ extension WebViewViewController: WKNavigationDelegate {
             if let code = fetchCode(from: navigationAction.request.url) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             decisionHandler(.cancel)
-            
         } else {
             decisionHandler(.allow)
             

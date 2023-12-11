@@ -6,33 +6,39 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
+
+// MARK: - Protocol
 
 protocol TokenStorage {
   var token: String? { get }
 }
 
-// MARK: - OAuth2TokenStorage
-
 final class OAuth2TokenStorage {
-  private enum Keys: String {
-    case token
-  }
-  private let userDefaults: UserDefaults
 
-  init(userDefaults: UserDefaults = .standard) {
-    self.userDefaults = userDefaults
-  }
+  static let shared = OAuth2TokenStorage()
+
+  private let keychainWrapper = KeychainWrapper.standard
 }
 
 // MARK: - TokenStorage
 
 extension OAuth2TokenStorage: TokenStorage {
+
   var token: String? {
     get {
-      userDefaults.string(forKey: Keys.token.rawValue)
+      keychainWrapper.string(forKey: Constants.bearerToken)
     }
     set {
-      userDefaults.set(newValue, forKey: Keys.token.rawValue)
+      guard let newValue else { return }
+      keychainWrapper.set(newValue, forKey: Constants.bearerToken)
     }
+  }
+}
+
+extension OAuth2TokenStorage {
+
+  func removeToken() -> Bool {
+    keychainWrapper.removeObject(forKey: Constants.bearerToken)
   }
 }

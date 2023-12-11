@@ -10,8 +10,10 @@ import UIKit
 protocol AuthViewControllerDelegate: AnyObject {
   func authViewController(_ viewController: AuthViewController, didAuthenticateWithCode code: String)
 }
+
 final class AuthViewController: UIViewController {
     private let showWebViewSegueIdentifier = "ShowWebView"
+    
     weak var delegate: AuthViewControllerDelegate?
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

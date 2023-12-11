@@ -9,7 +9,7 @@ import UIKit
 
 final class ImagesListViewController: UIViewController {
     
-    // MARK: - • IBOutlet
+    // MARK: - IBOutlet
     
     @IBOutlet private var tableView: UITableView!
     
