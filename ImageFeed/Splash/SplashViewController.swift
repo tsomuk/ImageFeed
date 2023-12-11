@@ -68,7 +68,8 @@ private extension SplashViewController {
       let alertModel = AlertModel(
         title: "Что-то пошло не так :(",
         message: "Не удалось войти в систему: \(error.localizedDescription)",
-        buttonText: "Ok") {
+        buttonText: "Ok") { [weak self] in
+            guard let self = self else { return }
           self.wasChecked = false
           guard OAuth2TokenStorage.shared.removeToken() else {
             assertionFailure("Cannot remove token")

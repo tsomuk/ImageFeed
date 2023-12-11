@@ -51,7 +51,7 @@ final class ProfileViewController: UIViewController {
     }
     
     
-    @objc func updateAvatar(notification: Notification) {
+    private func updateAvatar(notification: Notification) {
         guard
             isViewLoaded,
             let userInfo = notification.userInfo,

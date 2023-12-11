@@ -78,12 +78,13 @@ extension OAuth2Service {
         
         task = urlSession.objectTask(for: request) {
             [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
-            guard let self else { preconditionFailure("Can't make weak link") }
+            guard let self else { return }
             self.task = nil
             switch result {
             case .success(let body):
                 let authToken = body.accessToken
                 self.storage.token = authToken
+                self.lastCode = nil
                 completion(.success(authToken))
             case .failure(let error):
                 self.lastCode = nil
