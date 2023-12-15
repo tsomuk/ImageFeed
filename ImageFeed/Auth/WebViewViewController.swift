@@ -86,10 +86,10 @@ extension WebViewViewController {
     func requestWebView() {
         var urlComponents = URLComponents(string: WebConstant.authURL)!
         urlComponents.queryItems = [
-            URLQueryItem(name: WebKeyConstant.clientID, value: accessKey),
-            URLQueryItem(name: WebKeyConstant.redirectURI, value: redirectURI),
+            URLQueryItem(name: WebKeyConstant.clientID, value: Constants.accessKey),
+            URLQueryItem(name: WebKeyConstant.redirectURI, value: Constants.redirectURI),
             URLQueryItem(name: WebKeyConstant.responseType, value: WebConstant.code),
-            URLQueryItem(name: WebKeyConstant.scope, value: accessScope)
+            URLQueryItem(name: WebKeyConstant.scope, value: Constants.accessScope)
         ]
         let url = urlComponents.url!
         let request = URLRequest(url: url)

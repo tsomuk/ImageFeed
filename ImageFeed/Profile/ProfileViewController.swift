@@ -148,7 +148,7 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func didTapButton() {
-        print("LogOut Button")
+        debugPrint("LogOut Button")
         resetToken()
         resetView()
         switchToSplashVC()

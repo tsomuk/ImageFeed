@@ -164,7 +164,7 @@ private extension SplashViewController {
 
       switch profileImageUrl {
       case .success(let mediumPhoto):
-        print("Photo Link:  \(mediumPhoto)")
+        debugPrint("Photo Link:  \(mediumPhoto)")
       case .failure(let error):
         self.showLoginAlert(error: error)
       }
