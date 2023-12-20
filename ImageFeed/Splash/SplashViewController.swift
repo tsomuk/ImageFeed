@@ -17,11 +17,12 @@ final class SplashViewController: UIViewController {
     return imageView
   }()
 
-  private let oAuth2Service = OAuth2Service.shared
-  private let profileService = ProfileService.shared
-  private let profileImageService = ProfileImageService.shared
-  private var alertPresenter: AlertPresenting?
-  private var wasChecked = false
+    private let oAuth2Service = OAuth2Service.shared
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private let imageListService = ImageListService.shared
+    private var alertPresenter: AlertPresenting?
+    private var wasChecked = false
 
   // MARK: - Public properties
 
@@ -35,6 +36,7 @@ final class SplashViewController: UIViewController {
     super.viewDidLoad()
     alertPresenter = AlertPresenter(viewController: self)
     setupSplashViewController()
+      imageListService.fetchPhotoNextPage()
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -147,9 +149,11 @@ private extension SplashViewController {
       switch profileResult {
       case .success(let profile):
         let userName = profile.username
+          debugPrint("Test Print SVC 152 run fetchProfileImage \(userName)")
         self.fetchProfileImage(userName: userName)
         self.switchToTabBarController()
       case .failure(let error):
+          debugPrint("Test Print SVC 156 \(error)")
         self.showLoginAlert(error: error)
       }
       completion()
@@ -170,6 +174,17 @@ private extension SplashViewController {
       }
     }
   }
+    
+    func fetchPhotosNextPage() {
+        imageListService.fetchPhotoNextPage()
+        print("SVC 177\(imageListService.photos)")
+        imageListService.fetchPhotoNextPage()
+              print("SVC 179\(imageListService.photos)")
+        imageListService.fetchPhotoNextPage()
+        print("SVC 181\(imageListService.photos)")
+    }
+    
+    
 }
 
 // MARK: - AuthViewControllerDelegate

@@ -12,6 +12,7 @@ final class ImageListService {
     
     static let DidChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     static let shared = ImageListService()
+    static let didChangeNotiffication = Notification.Name("ImageListServiceDidChange")
     
     private let session = URLSession.shared
     private let requestBuiler = URLRequestBuilder.shared
@@ -29,18 +30,20 @@ final class ImageListService {
         requestBuiler.makeHTTPRequest(path: Constants.photoPathString + "?page=\(page)")
     }
     
-    
-    
-    func fetchPhotoNextPage() -> Int {
+    func makeNextPageNumber() -> Int {
         guard let lastLoadedPage else { return 1 }
         return lastLoadedPage + 1
     }
-}
-
-extension ImageListService {
-    func fetchPhotosNextPage() {
-        guard let request = makePhotoRequest(page: lastLoadedPage!) else {
+    
+    func fetchPhotoNextPage()  {
+        
+        assert(Thread.isMainThread)
+        
+        let nextPage = makeNextPageNumber()
+        
+        guard let request = makePhotoRequest(page: nextPage) else {
             assertionFailure("Invalid Request")
+            print(NetworkError.invalidRequest)
             return
         }
         
@@ -50,20 +53,21 @@ extension ImageListService {
                 DispatchQueue.main.async {
                     var photos: [Photo] = []
                     photoResults.forEach { photo in
-                        debugPrint(photo.urls)
+                        debugPrint("TEST PRINT IMAGE URL",photo.urls)
                     }
                     
                 }
             case .failure(let error):
-                debugPrint(error.localizedDescription)
+                debugPrint("Ошибка ILS 61",error.localizedDescription)
             }
 //            self.currentTask = nil
         }
         currentTask = task
         task.resume()
-        
-        
+    
     }
-    
-    
 }
+
+
+
+     

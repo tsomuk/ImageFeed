@@ -16,12 +16,6 @@ final class ImagesListViewController: UIViewController {
     private let imageListService = ImageListService.shared
     private var photos: [Photo] = []
     
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,13 +56,14 @@ extension ImagesListViewController: UITableViewDataSource {
 }
 
 extension ImagesListViewController {
+    
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return
         }
         
-        cell.cellImage.image = image
-        cell.dataLabel.text = dateFormatter.string(from: Date())
+        cell.cellImage.image = UIImage(named: photosName[indexPath.row])
+        cell.dataLabel.text =  Constants.dataFormater.string(from: Date())
         
         let isFavorite = indexPath.row % 2 == 0
         let favoriteImage = isFavorite ? UIImage(named: "No_Active") : UIImage(named: "Active")
@@ -100,8 +95,10 @@ extension ImagesListViewController {
 
 extension ImagesListViewController {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
         if indexPath.row + 1 == photos.count {
-            imageListService.fetchPhotosNextPage()
+            imageListService.fetchPhotoNextPage()
+            
         }
     }
     

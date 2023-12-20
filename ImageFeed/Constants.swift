@@ -30,9 +30,9 @@ public enum Constants {
     static let bearerToken = "bearerToken"
     
     // Data formatter
-    static let dateTimeDefaultFormatter: DateFormatter = {
+    static let dataFormater: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.YY HH:mm"
+        dateFormatter.dateFormat = "dd MMMM YYYY"
         return dateFormatter
     }()
 }
