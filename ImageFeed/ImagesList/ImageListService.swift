@@ -35,10 +35,31 @@ final class ImageListService {
         return lastLoadedPage + 1
     }
     
+    func convert(result photoResult: PhotoResult) -> Photo {
+      let thumbWidth = 200.0
+      let aspectRatio = Double(photoResult.width) / Double(photoResult.height)
+      let thumbHeight = thumbWidth / aspectRatio
+      return Photo(
+        id: photoResult.id,
+        size: CGSize(width: Double(photoResult.width), height: Double(photoResult.height)),
+        createdAt: ISO8601DateFormatter().date(from: photoResult.createdAt ?? ""),
+        welcomeDescription: photoResult.description,
+        thumbImageURL: photoResult.urls.small,
+        largeImageURL: photoResult.urls.full,
+        isLiked: photoResult.likedByUser,
+        thumbSize: CGSize(width: thumbWidth, height: thumbHeight)
+      )
+    }
+    
+    
+    
     func fetchPhotoNextPage()  {
         
         assert(Thread.isMainThread)
-        
+        guard currentTask == nil else {
+            debugPrint("Rave condition ILS42")
+            return
+        }
         let nextPage = makeNextPageNumber()
         
         guard let request = makePhotoRequest(page: nextPage) else {
@@ -48,11 +69,13 @@ final class ImageListService {
         }
         
         let task = session.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
+            guard let self else { preconditionFailure("Can't make weak link") }
             switch result {
             case .success(let photoResults):
                 DispatchQueue.main.async {
                     var photos: [Photo] = []
                     photoResults.forEach { photo in
+                        photos.append(self.convert(result: photo))
                         debugPrint("TEST PRINT IMAGE URL",photo.urls)
                     }
                     
@@ -60,7 +83,7 @@ final class ImageListService {
             case .failure(let error):
                 debugPrint("Ошибка ILS 61",error.localizedDescription)
             }
-//            self.currentTask = nil
+            self.currentTask = nil
         }
         currentTask = task
         task.resume()
