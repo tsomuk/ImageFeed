@@ -20,8 +20,11 @@ final class ImageListService {
     
     private var currentTask : URLSessionTask?
     private var lastLoadedPage: Int?
-    private (set) var photos: [Photo] = []
-    
+    private (set) var photos: [Photo] = [] {
+        didSet {
+            NotificationCenter.default.post(name: ImageListService.didChangeNotiffication, object: self)
+        }
+    }
     private init() { }
     
     
