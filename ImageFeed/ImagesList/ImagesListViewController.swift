@@ -121,6 +121,24 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController: ImagesListCellDelegate {
     func imagesListCellDidTapLike(_ cell: ImagesListCell) {
-        debugPrint("blabla")
+      guard let indexPath = tableView.indexPath(for: cell) else { return }
+      let photo = photos[indexPath.row]
+      UIBlockingProgressHUD.show()
+      imageListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { [weak self ] result in
+        guard let self else { return }
+        switch result {
+        case .success(let isLiked):
+          self.photos[indexPath.row].isLiked = isLiked
+          cell.setIsLiked(isLiked)
+          UIBlockingProgressHUD.dismiss()
+        case .failure(let error):
+          UIBlockingProgressHUD.dismiss()
+          print("\(error.localizedDescription)")
+          // TODO: Make & show alert
+        }
+      }
     }
   }
+
+
+

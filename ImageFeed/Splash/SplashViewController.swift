@@ -121,65 +121,58 @@ private extension SplashViewController {
 // MARK: - Private fetch methods
 
 private extension SplashViewController {
-
-  func fetchAuthToken(with code: String) {
-    UIBlockingProgressHUD.show()
-
-    oAuth2Service.fetchAuthToken(with: code) { [weak self] authResult in
-      guard let self else { preconditionFailure("Can't fetch auth token") }
-
-      switch authResult {
-        // swiftlint:disable:next empty_enum_arguments
-      case .success(_):
-        self.fetchProfile(completion: {
-          UIBlockingProgressHUD.dismiss()
-        })
-      case .failure(let error):
-        self.showLoginAlert(error: error)
-        UIBlockingProgressHUD.dismiss()
-      }
-    }
-  }
-
-  func fetchProfile(completion: @escaping () -> Void) {
-
-    profileService.fetchProfile { [weak self] profileResult in
-      guard let self else { preconditionFailure("Can't fetch profileResult") }
-
-      switch profileResult {
-      case .success(let profile):
-        let userName = profile.username
-          debugPrint("Test Print run fetchProfileImage \(userName)")
-        self.fetchProfileImage(userName: userName)
-        self.switchToTabBarController()
-      case .failure(let error):
-          debugPrint("Test Print \(error)")
-        self.showLoginAlert(error: error)
-      }
-      completion()
-    }
-  }
-
-  func fetchProfileImage(userName: String) {
-
-    profileImageService.fetchProfileImageURL(userName: userName) { [weak self] profileImageUrl in
-
-      guard let self else { return }
-
-      switch profileImageUrl {
-      case .success(let mediumPhoto):
-        debugPrint("Photo Link:  \(mediumPhoto)")
-      case .failure(let error):
-        self.showLoginAlert(error: error)
-      }
-    }
-  }
     
-    func fetchPhotosNextPage() {
-        imageListService.fetchPhotoNextPage()
+    func fetchAuthToken(with code: String) {
+        UIBlockingProgressHUD.show()
+        
+        oAuth2Service.fetchAuthToken(with: code) { [weak self] authResult in
+            guard let self else { preconditionFailure("Can't fetch auth token") }
+            
+            switch authResult {
+            case .success(_):
+                self.fetchProfile(completion: {
+                    UIBlockingProgressHUD.dismiss()
+                })
+            case .failure(let error):
+                self.showLoginAlert(error: error)
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
     }
     
+    func fetchProfile(completion: @escaping () -> Void) {
+        
+        profileService.fetchProfile { [weak self] profileResult in
+            guard let self else { preconditionFailure("Can't fetch profileResult") }
+            
+            switch profileResult {
+            case .success(let profile):
+                let userName = profile.username
+                debugPrint("Test Print run fetchProfileImage \(userName)")
+                self.fetchProfileImage(userName: userName)
+                self.switchToTabBarController()
+            case .failure(let error):
+                debugPrint("Test Print \(error)")
+                self.showLoginAlert(error: error)
+            }
+            completion()
+        }
+    }
     
+    func fetchProfileImage(userName: String) {
+        
+        profileImageService.fetchProfileImageURL(userName: userName) { [weak self] profileImageUrl in
+            
+            guard let self else { return }
+            
+            switch profileImageUrl {
+            case .success(let mediumPhoto):
+                debugPrint("Photo Link:  \(mediumPhoto)")
+            case .failure(let error):
+                self.showLoginAlert(error: error)
+            }
+        }
+    }
 }
 
 // MARK: - AuthViewControllerDelegate

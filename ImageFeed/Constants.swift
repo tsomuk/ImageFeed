@@ -25,6 +25,7 @@ public enum Constants {
     // HTTP methods
     static let getMethodString = "GET"
     static let postMethodString = "POST"
+    static let deleteMethodString = "DELETE"
 
     // Storage const
     static let bearerToken = "bearerToken"

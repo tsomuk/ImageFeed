@@ -26,13 +26,23 @@ struct PhotoResult: Codable {
     let description: String?
     let likedByUser: Bool
     let urls: Urls
+}
     
     // MARK: - Urls
     struct Urls: Codable {
         let full, small: String
     }
     
-}
+    struct LikeResult: Codable {
+      let photo: PhotoLikeResult
+    }
+
+    struct PhotoLikeResult: Codable {
+      let likedByUser: Bool
+    }
+    
+    
+
 
 
 
