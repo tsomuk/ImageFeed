@@ -44,6 +44,9 @@
                                                     </constraints>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" title="Button" image="Active"/>
+                                                    <connections>
+                                                        <action selector="didTapLikeButton:" destination="dnZ-Vz-GaX" eventType="touchUpInside" id="1UW-E7-cvK"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23 июля 1992" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTW-wN-Khv" userLabel="date">
                                                     <rect key="frame" x="28.000000000000007" y="187" width="85.666666666666686" height="16"/>
@@ -67,7 +70,7 @@
                                         <connections>
                                             <outlet property="cellImage" destination="buL-OM-Q71" id="cfc-X8-FGG"/>
                                             <outlet property="dataLabel" destination="cTW-wN-Khv" id="SGQ-MN-H39"/>
-                                            <outlet property="favoriteSign" destination="7Yo-RR-bgx" id="xIQ-ke-Iez"/>
+                                            <outlet property="favoriteButton" destination="7Yo-RR-bgx" id="xIQ-ke-Iez"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

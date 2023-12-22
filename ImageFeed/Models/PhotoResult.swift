@@ -29,7 +29,7 @@ struct PhotoResult: Codable {
     
     // MARK: - Urls
     struct Urls: Codable {
-        let raw, full, small: String
+        let full, small: String
     }
     
 }

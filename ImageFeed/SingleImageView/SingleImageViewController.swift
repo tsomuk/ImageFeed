@@ -30,6 +30,8 @@ final class SingleImageViewController : UIViewController {
         rescaleAndCenterImageInScrollView(image: image)
     }
    
+    var largeImageURL: URL?
+    
     @IBAction func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }

@@ -10,27 +10,23 @@ import Foundation
 final class ImageListService {
     
     
-    static let DidChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+    
     static let shared = ImageListService()
-    static let didChangeNotiffication = Notification.Name("ImageListServiceDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ImageListServiceDidChange")
     
     private let session = URLSession.shared
-    private let requestBuiler = URLRequestBuilder.shared
+    private let requestBuilder = URLRequestBuilder.shared
     
     
     private var currentTask : URLSessionTask?
     private var lastLoadedPage: Int?
-    private (set) var photos: [Photo] = [] {
-        didSet {
-            NotificationCenter.default.post(name: ImageListService.didChangeNotiffication, object: self)
-        }
-    }
+    private (set) var photos: [Photo] = []
     private init() { }
     
     
     
     func makePhotoRequest(page: Int) -> URLRequest? {
-        requestBuiler.makeHTTPRequest(path: Constants.photoPathString + "?page=\(page)")
+        requestBuilder.makeHTTPRequest(path: Constants.photoPathString + "?page=\(page)")
     }
     
     func makeNextPageNumber() -> Int {
@@ -56,43 +52,44 @@ final class ImageListService {
     
     
     
-    func fetchPhotoNextPage()  {
-        
-        assert(Thread.isMainThread)
-        guard currentTask == nil else {
-            debugPrint("Rave condition ILS42")
-            return
-        }
-        let nextPage = makeNextPageNumber()
-        
-        guard let request = makePhotoRequest(page: nextPage) else {
-            assertionFailure("Invalid Request")
-            print(NetworkError.invalidRequest)
-            return
-        }
-        
-        let task = session.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
-            guard let self else { preconditionFailure("Can't make weak link") }
-            switch result {
-            case .success(let photoResults):
-                DispatchQueue.main.async {
-                    var photos: [Photo] = []
-                    photoResults.forEach { photo in
-                        photos.append(self.convert(result: photo))
-                        debugPrint("TEST PRINT IMAGE URL",photo.urls)
-                    }
-                    
-                }
-            case .failure(let error):
-                debugPrint("Ошибка ILS 61",error.localizedDescription)
+    func fetchPhotoNextPage() {
+      assert(Thread.isMainThread)
+
+      guard currentTask == nil else {
+          debugPrint("Race Condition - reject repeated photos request")
+        return
+      }
+      let nextPage = makeNextPageNumber()
+
+      guard let request = makePhotoRequest(page: nextPage) else {
+        assertionFailure("Invalid request")
+          debugPrint(NetworkError.invalidRequest)
+        return
+      }
+
+      let task = session.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
+        guard let self else { preconditionFailure("Cannot make weak link") }
+        switch result {
+        case .success(let photoResults):
+          DispatchQueue.main.async {
+            var photos: [Photo] = []
+            photoResults.forEach { photo in
+              photos.append(self.convert(result: photo))
             }
-            self.currentTask = nil
+            self.photos += photos
+            NotificationCenter.default.post(name: ImageListService.didChangeNotification, object: self)
+            self.lastLoadedPage = nextPage
+          }
+        case .failure(let error):
+          debugPrint("Error: \(String(describing: error))")
         }
-        currentTask = task
-        task.resume()
-    
+        self.currentTask = nil
+      }
+      currentTask = task
+      task.resume()
     }
-}
+  }
+
 
 
 
