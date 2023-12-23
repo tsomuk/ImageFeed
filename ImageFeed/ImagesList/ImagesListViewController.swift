@@ -8,33 +8,60 @@
 import UIKit
 
 final class ImagesListViewController: UIViewController {
-  // MARK: - Outlets
-
-  @IBOutlet private var tableView: UITableView!
-
-  // MARK: - Private properties
-
-  private var photos: [Photo] = []
-  private let showSingleImageSegueIdentifier = "ShowSingleImage"
-
-  private var imageListService = ImageListService.shared
-  private var imageListServiceObserver: NSObjectProtocol?
-
-  // MARK: - Public properties
-
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-      return .lightContent
-  }
-
-  // MARK: - Lifecycle
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    setupTableView()
-    setupImageListService()
-    setupNotificationObserver()
-  }
+    // MARK: - Outlets
+    
+    @IBOutlet private var tableView: UITableView!
+    
+    // MARK: - Private properties
+    
+    private var photos: [Photo] = []
+    private let showSingleImageSegueIdentifier = "ShowSingleImage"
+    
+    private var imageListService = ImageListService.shared
+    private var imageListServiceObserver: NSObjectProtocol?
+    
+    // MARK: - Public properties
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    // MARK: - Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTableView()
+        setupImageListService()
+        setupNotificationObserver()
+    }
+    
+    //   MARK: - public methods
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == showSingleImageSegueIdentifier {
+            guard
+                let viewController = segue.destination as? SingleImageViewController,
+                let indexPath = sender as? IndexPath
+            else {
+                super.prepare(for: segue, sender: sender)
+                return
+            }
+            viewController.largeImageURL = URL(string: photos[indexPath.row].largeImageURL)
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
 }
+
+extension ImagesListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
+    }
+}
+
 
 // MARK: - private methods
 
@@ -42,7 +69,7 @@ private extension ImagesListViewController {
 
   func setupTableView() {
     tableView.dataSource = self
-//    tableView.delegate = self
+    tableView.delegate = self
     tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
   }
 

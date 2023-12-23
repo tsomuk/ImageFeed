@@ -118,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				115B8A842B1E30D0001B0009 /* AlertPresenter.swift */,
+				115B8A812B1E3001001B0009 /* AlertModel.swift */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -163,10 +164,10 @@
 				115FC79E2A51B9F4008BB6C8 /* SceneDelegate.swift */,
 				11933E492A9DD257005AA90F /* Constants.swift */,
 				115F174A2A9EFF5F00954786 /* OAuth2 */,
+				115B8A832B1E30C1001B0009 /* Alert */,
 				11FB30C82A7597A30009F2E5 /* Profile */,
 				11FB822D2AA242B8009C79AF /* Splash */,
 				11AACC2D2B2779E50042D394 /* Models */,
-				115B8A832B1E30C1001B0009 /* Alert */,
 				115B8A8B2B1F3008001B0009 /* TabBar */,
 				112E6B112A51FC8A0096446A /* ImagesList */,
 				11933E522A9E49DC005AA90F /* SingleImageView */,
@@ -200,7 +201,6 @@
 		11AACC2D2B2779E50042D394 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				115B8A812B1E3001001B0009 /* AlertModel.swift */,
 				11F0C1FE2B178E9300BAE1A9 /* ProfileStructures.swift */,
 				11AACC2B2B2773650042D394 /* PhotoResult.swift */,
 			);
