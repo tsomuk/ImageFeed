@@ -33,6 +33,7 @@ final class ImagesListViewController: UIViewController {
         setupTableView()
         setupImageListService()
         setupNotificationObserver()
+        view.addSubview(tableView)
     }
     
     //   MARK: - public methods
@@ -161,7 +162,6 @@ extension ImagesListViewController: ImagesListCellDelegate {
         case .failure(let error):
           UIBlockingProgressHUD.dismiss()
           print("\(error.localizedDescription)")
-          // TODO: Make & show alert
         }
       }
     }
