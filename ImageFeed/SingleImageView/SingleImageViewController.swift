@@ -80,6 +80,8 @@ final class SingleImageViewController : UIViewController {
       let imageOffsetY = (newContentSize.height - visibleContentSize.height) / 2
       scrollView.setContentOffset(CGPoint(x: imageOffsetX, y: imageOffsetY), animated: false)
       scrollView.layoutIfNeeded()
+        
+        
     }
     
     func downloadImage() {
