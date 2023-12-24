@@ -90,21 +90,20 @@ private extension ImagesListViewController {
       }
   }
 
-  func updateTableViewAnimated() {
-    let oldCount = photos.count
-    photos = imageListService.photos
-    let newCount = photos.count
-
-    if oldCount != newCount {
-      tableView.performBatchUpdates {
-        let indexes = (oldCount..<newCount).map { index in
-          IndexPath(row: index, section: 0)
+    private func updateTableViewAnimated() {
+            DispatchQueue.main.async {
+                let oldCount = self.photos.count
+                let newCount = self.imageListService.photos.count
+                self.tableView.performBatchUpdates({
+                    self.photos = self.imageListService.photos
+                    let indexPaths = (oldCount..<newCount).map { i in
+                        IndexPath(row: i, section: 0)
+                    }
+                    self.tableView.insertRows(at: indexPaths, with: .automatic)
+                })
+            }
         }
-        tableView.insertRows(at: indexes, with: .automatic)
-      }
     }
-  }
-}
 
 
 // MARK: - UITableViewDataSource
