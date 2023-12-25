@@ -68,7 +68,7 @@ extension OAuth2Service {
         guard code != lastCode else { return }
         task?.cancel()
         lastCode = code
-        print("✅", "LastCode:",lastCode)
+        debugPrint("✅", "LastCode:",lastCode)
         
         guard let request = makeRequest(code: code) else {
             assertionFailure("Error Reguest")
@@ -93,13 +93,15 @@ extension OAuth2Service {
         }
         
         
+        
+        
         func makeRequest(code: String) -> URLRequest? {
             
             var urlComponents = URLComponents(string: OAuth2Constants.authTokenURL)
             urlComponents?.queryItems = [
-                URLQueryItem(name: OAuth2Constants.clientID, value: accessKey),
-                URLQueryItem(name: OAuth2Constants.clientSecret, value: secretKey),
-                URLQueryItem(name: OAuth2Constants.redirectURI, value: redirectURI),
+                URLQueryItem(name: OAuth2Constants.clientID, value: Constants.accessKey),
+                URLQueryItem(name: OAuth2Constants.clientSecret, value: Constants.secretKey),
+                URLQueryItem(name: OAuth2Constants.redirectURI, value: Constants.redirectURI),
                 URLQueryItem(name: OAuth2Constants.code, value: code),
                 URLQueryItem(name: OAuth2Constants.grandType, value: OAuth2Constants.requestGrantType)
             ]

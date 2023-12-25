@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KwI-sk-eDh">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -43,7 +43,10 @@
                                                         <constraint firstAttribute="height" constant="44" id="SDg-eY-ZZW"/>
                                                     </constraints>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="Button" image="Active"/>
+                                                    <state key="normal" title="Button" image="like"/>
+                                                    <connections>
+                                                        <action selector="didTapLikeButton:" destination="dnZ-Vz-GaX" eventType="touchUpInside" id="1UW-E7-cvK"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23 июля 1992" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTW-wN-Khv" userLabel="date">
                                                     <rect key="frame" x="28.000000000000007" y="187" width="85.666666666666686" height="16"/>
@@ -67,7 +70,7 @@
                                         <connections>
                                             <outlet property="cellImage" destination="buL-OM-Q71" id="cfc-X8-FGG"/>
                                             <outlet property="dataLabel" destination="cTW-wN-Khv" id="SGQ-MN-H39"/>
-                                            <outlet property="favoriteSign" destination="7Yo-RR-bgx" id="xIQ-ke-Iez"/>
+                                            <outlet property="favoriteButton" destination="7Yo-RR-bgx" id="xIQ-ke-Iez"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -105,16 +108,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hKU-KE-1Jh">
-                                <rect key="frame" x="-20" y="-20" width="470" height="972"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hKU-KE-1Jh">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="7" translatesAutoresizingMaskIntoConstraints="NO" id="UEU-wg-aqz">
-                                        <rect key="frame" x="20" y="20" width="430" height="932"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="14" translatesAutoresizingMaskIntoConstraints="NO" id="UEU-wg-aqz">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="133"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxY-9O-P41">
-                                        <rect key="frame" x="28" y="28" width="48" height="48"/>
+                                        <rect key="frame" x="8" y="8" width="48" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="M3g-h9-ibD"/>
                                             <constraint firstAttribute="width" constant="48" id="tdi-JI-Mpd"/>
@@ -127,6 +128,12 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="UEU-wg-aqz" firstAttribute="top" secondItem="hKU-KE-1Jh" secondAttribute="top" id="DEX-MG-ohu"/>
+                                    <constraint firstAttribute="trailing" secondItem="UEU-wg-aqz" secondAttribute="trailing" id="IZx-oC-LhU"/>
+                                    <constraint firstItem="UEU-wg-aqz" firstAttribute="leading" secondItem="hKU-KE-1Jh" secondAttribute="leading" id="Kk0-SD-UYx"/>
+                                    <constraint firstAttribute="bottom" secondItem="UEU-wg-aqz" secondAttribute="bottom" id="Vhi-yq-qUC"/>
+                                </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="2F8-br-9qm"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="7x3-AM-TsR"/>
                                 <connections>
@@ -134,7 +141,7 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xqj-X0-YhX" userLabel="sharingButton">
-                                <rect key="frame" x="171.66666666666666" y="751" width="50" height="50"/>
+                                <rect key="frame" x="171.66666666666666" y="785" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="RJC-1a-VBo"/>
                                     <constraint firstAttribute="width" constant="50" id="zRB-sa-shM"/>
@@ -149,9 +156,13 @@
                         <viewLayoutGuide key="safeArea" id="Ec6-E3-eGW"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
-                            <constraint firstItem="Xqj-X0-YhX" firstAttribute="centerX" secondItem="Zmy-VT-TDb" secondAttribute="centerX" id="8L0-U1-pEO"/>
                             <constraint firstItem="mxY-9O-P41" firstAttribute="leading" secondItem="Ec6-E3-eGW" secondAttribute="leading" constant="8" id="CFh-Sx-E5n"/>
-                            <constraint firstAttribute="bottom" secondItem="Xqj-X0-YhX" secondAttribute="bottom" constant="51" id="glX-4N-7X2"/>
+                            <constraint firstItem="Ec6-E3-eGW" firstAttribute="trailing" secondItem="hKU-KE-1Jh" secondAttribute="trailing" id="RgL-6p-v2X"/>
+                            <constraint firstItem="Xqj-X0-YhX" firstAttribute="centerX" secondItem="Zmy-VT-TDb" secondAttribute="centerX" id="WGk-RZ-Yul"/>
+                            <constraint firstItem="hKU-KE-1Jh" firstAttribute="top" secondItem="Zmy-VT-TDb" secondAttribute="top" id="ZgQ-5Z-NFY"/>
+                            <constraint firstItem="Ec6-E3-eGW" firstAttribute="bottom" secondItem="Xqj-X0-YhX" secondAttribute="bottom" constant="17" id="g4v-wl-njz"/>
+                            <constraint firstAttribute="bottom" secondItem="hKU-KE-1Jh" secondAttribute="bottom" id="n5q-rX-f0Y"/>
+                            <constraint firstItem="hKU-KE-1Jh" firstAttribute="leading" secondItem="Ec6-E3-eGW" secondAttribute="leading" id="uJt-7d-3KC"/>
                             <constraint firstItem="mxY-9O-P41" firstAttribute="top" secondItem="Ec6-E3-eGW" secondAttribute="top" constant="8" id="uwr-zd-vFy"/>
                         </constraints>
                     </view>
@@ -164,7 +175,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EhY-YW-gnd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="526" y="184"/>
+            <point key="canvasLocation" x="525.95419847328242" y="183.80281690140845"/>
         </scene>
         <!--Auth View Controller-->
         <scene sceneID="4Mc-r6-GfY">
@@ -189,7 +200,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Войти">
+                                <state key="normal" title="Log in">
                                     <color key="titleColor" name="ypBlack"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -315,11 +326,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="14" width="200" height="133"/>
         <image name="7" width="200" height="133"/>
-        <image name="Active" width="44" height="44"/>
         <image name="Backward" width="24" height="24"/>
         <image name="Logo_of_Unsplash" width="60" height="60"/>
         <image name="Sharing" width="50.333332061767578" height="50"/>
+        <image name="like" width="44" height="44"/>
         <image name="nav_back_button_black" width="24" height="24"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <namedColor name="YP Black">

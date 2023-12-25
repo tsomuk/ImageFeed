@@ -8,17 +8,28 @@
 import Foundation
 
 
-let secretKey = "Nt04IHldFukSep8Cbvy4w2Spkp9B33bfEmcMSN5Z3zU"
-let accessKey = "TIIkrtuIhItIuiCkXyZGRDj3K_AJNTGRguzhj-u5wmQ"
-let redirectURI = "urn:ietf:wg:oauth:2.0:oob"
-let accessScope = "public+read_user+write_likes"
-let defaultBaseURL = URL(string: "https://api.unsplash.com/")!
-
-
 public enum Constants {
+    
+    // Unsplash const
+    static let secretKey = "Nt04IHldFukSep8Cbvy4w2Spkp9B33bfEmcMSN5Z3zU"
+    static let accessKey = "TIIkrtuIhItIuiCkXyZGRDj3K_AJNTGRguzhj-u5wmQ"
+    static let redirectURI = "urn:ietf:wg:oauth:2.0:oob"
+    static let accessScope = "public+read_user+write_likes"
+    static let defaultBaseURL = URL(string: "https://api.unsplash.com/")!
+    
+    // Unsplash urls
     static let defaultApiBaseURLString = "https://api.unsplash.com"
-    static let secretKey: String = "Nt04IHldFukSep8Cbvy4w2Spkp9B33bfEmcMSN5Z3zU"
     static let profileRequestPathString = "/me"
+    static let photoPathString = "/photos"
+
+    // HTTP methods
     static let getMethodString = "GET"
+    static let postMethodString = "POST"
+    static let deleteMethodString = "DELETE"
+
+    // Storage const
     static let bearerToken = "bearerToken"
+    
+    // Data formatter
+    
 }
