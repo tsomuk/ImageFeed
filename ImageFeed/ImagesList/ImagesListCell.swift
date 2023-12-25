@@ -43,15 +43,16 @@ final class ImagesListCell: UITableViewCell {
         let likedImage = isLiked ? UIImage(named: "like") : UIImage(named: "no_like")
           favoriteButton.setImage(likedImage, for: .normal)
       }
-      
 
     func loadCell(from photo: Photo) -> Bool {
       var status = false
 
       if let photoDate = photo.createdAt {
           dataLabel.text = Constants.dataFormater.string(from: photoDate)
+      } else {
+          dataLabel.text = ""
       }
-
+        
         setIsLiked(photo.isLiked)
 
       guard let photoURL = URL(string: photo.thumbImageURL) else { return status }

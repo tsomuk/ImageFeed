@@ -17,20 +17,17 @@ protocol ImageListLoading: AnyObject {
 
 final class ImageListService {
     
-    
     static let shared = ImageListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImageListServiceDidChange")
+    static let dateFormatter = ISO8601DateFormatter()
     
     private let session = URLSession.shared
     private let requestBuilder = URLRequestBuilder.shared
-    
     
     private var currentTask : URLSessionTask?
     private var lastLoadedPage: Int?
     private (set) var photos: [Photo] = []
     private init() { }
-    
-    
     
     func makePhotoRequest(page: Int) -> URLRequest? {
         requestBuilder.makeHTTPRequest(path: Constants.photoPathString + "?page=\(page)")
