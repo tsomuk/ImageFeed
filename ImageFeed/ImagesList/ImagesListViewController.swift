@@ -26,6 +26,9 @@ final class ImagesListViewController: UIViewController {
         return .lightContent
     }
     
+   
+    
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {

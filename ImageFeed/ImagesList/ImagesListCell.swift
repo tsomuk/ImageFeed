@@ -19,6 +19,12 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet weak var dataLabel: UILabel!
 
     private let placeholderImage = UIImage(named: "placeholder")
+    
+    private lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMMM YYYY"
+        return dateFormatter
+    }()
 
     // MARK: - Public properties
     
@@ -48,7 +54,7 @@ final class ImagesListCell: UITableViewCell {
       var status = false
 
       if let photoDate = photo.createdAt {
-          dataLabel.text = Constants.dataFormater.string(from: photoDate)
+          dataLabel.text = dateFormatter.string(from: photoDate)
       } else {
           dataLabel.text = ""
       }
