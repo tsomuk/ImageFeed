@@ -19,6 +19,8 @@ public enum Constants {
     
     // Unsplash urls
     static let defaultApiBaseURLString = "https://api.unsplash.com"
+    static let authorizeURLString = "https://unsplash.com/oauth/authorize"
+    static let authorizedURLPath = "/oauth/authorize/native"
     static let profileRequestPathString = "/me"
     static let photoPathString = "/photos"
 
@@ -29,6 +31,7 @@ public enum Constants {
 
     // Storage const
     static let bearerToken = "bearerToken"
+    static let code = "code"
     
     // Data formatter
     
