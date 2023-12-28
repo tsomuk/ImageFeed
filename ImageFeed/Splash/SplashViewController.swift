@@ -129,7 +129,7 @@ private extension SplashViewController {
             guard let self else { preconditionFailure("Can't fetch auth token") }
             
             switch authResult {
-            case .success(_):
+            case .success:
                 self.fetchProfile(completion: {
                     UIBlockingProgressHUD.dismiss()
                 })

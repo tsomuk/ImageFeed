@@ -34,16 +34,18 @@ public enum Constants {
     // Storage const
     static let bearerToken = "bearerToken"
     static let code = "code"
+
+}
+
+struct AuthConfiguration {
+    let accessKey: String
+    let secretKey: String
+    let redirectURI: String
+    let accessSCope: String
+    let apiURLString: String
+    let authURLString: String
+    let baseURLString: String
     
-    struct AuthConfiguration {
-        let accessKey: String
-        let secretKey: String
-        let redirectURI: String
-        let accessSCope: String
-        let apiURLString: String
-        let authURLString: String
-        let baseURLString: String
-    }
     static var standard: AuthConfiguration {
         return AuthConfiguration(accessKey: Constants.accessKey,
                                  secretKey: Constants.secretKey,
@@ -52,6 +54,8 @@ public enum Constants {
                                  apiURLString: Constants.defaultApiBaseURLString,
                                  authURLString: Constants.authorizeURLString,
                                  baseURLString: Constants.baseURLString)
+        
     }
     
 }
+

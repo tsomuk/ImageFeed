@@ -26,6 +26,7 @@
 		115FC7A62A51B9F7008BB6C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 115FC7A52A51B9F7008BB6C8 /* Assets.xcassets */; };
 		115FC7A92A51B9F7008BB6C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 115FC7A72A51B9F7008BB6C8 /* LaunchScreen.storyboard */; };
 		118CAB4F2B3D488900656FF0 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118CAB4E2B3D488900656FF0 /* WebViewPresenter.swift */; };
+		118CAB512B3D77E200656FF0 /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118CAB502B3D77E200656FF0 /* AuthHelper.swift */; };
 		11933E4A2A9DD257005AA90F /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11933E492A9DD257005AA90F /* AuthConfiguration.swift */; };
 		11933E4C2A9DD3B3005AA90F /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11933E4B2A9DD3B3005AA90F /* AuthViewController.swift */; };
 		11933E4F2A9DD4AA005AA90F /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11933E4E2A9DD4AA005AA90F /* WebViewViewController.swift */; };
@@ -62,6 +63,7 @@
 		115FC7A82A51B9F7008BB6C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		115FC7AA2A51B9F7008BB6C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		118CAB4E2B3D488900656FF0 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
+		118CAB502B3D77E200656FF0 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		11933E492A9DD257005AA90F /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		11933E4B2A9DD3B3005AA90F /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		11933E4E2A9DD4AA005AA90F /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				11FB82292AA23C3E009C79AF /* URLSession+Extensions.swift */,
 				11FB822B2AA23C74009C79AF /* SnakeCaseJSONDecoder.swift */,
 				111156532B17DC73007D1F70 /* Notification+Extensions.swift */,
+				118CAB502B3D77E200656FF0 /* AuthHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				11FB822A2AA23C3E009C79AF /* URLSession+Extensions.swift in Sources */,
 				11FB82062AA113BA009C79AF /* OAuthTokenResponseBody.swift in Sources */,
 				115F17492A9EFEDF00954786 /* OAuth2Service.swift in Sources */,
+				118CAB512B3D77E200656FF0 /* AuthHelper.swift in Sources */,
 				115FC79D2A51B9F4008BB6C8 /* AppDelegate.swift in Sources */,
 				115B8A822B1E3001001B0009 /* AlertModel.swift in Sources */,
 				113CF0BF2A82091900BFEC47 /* UIColor+Extensions.swift in Sources */,

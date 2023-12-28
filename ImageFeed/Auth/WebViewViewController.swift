@@ -48,7 +48,7 @@ final class WebViewViewController: UIViewController {
     super.viewDidLoad()
 
     webView.navigationDelegate = self
-
+      progressView.setProgress(0, animated: true)
     setupWebViewObserve()
     presenter?.viewDidLoad()
   }
@@ -90,7 +90,7 @@ extension WebViewViewController: WebViewViewControllerProtocol {
   }
 
   func setProgressValue(_ newValue: Float) {
-    progressView.progress = newValue
+    progressView.setProgress(newValue, animated: true)
   }
 
   func setProgressHidden(_ flag: Bool) {
