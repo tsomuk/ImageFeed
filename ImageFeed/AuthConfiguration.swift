@@ -18,11 +18,13 @@ public enum Constants {
     static let defaultBaseURL = URL(string: "https://api.unsplash.com/")!
     
     // Unsplash urls
+    static let baseURLString = "https://unsplash.com"
     static let defaultApiBaseURLString = "https://api.unsplash.com"
     static let authorizeURLString = "https://unsplash.com/oauth/authorize"
     static let authorizedURLPath = "/oauth/authorize/native"
     static let profileRequestPathString = "/me"
     static let photoPathString = "/photos"
+    
 
     // HTTP methods
     static let getMethodString = "GET"
@@ -33,6 +35,23 @@ public enum Constants {
     static let bearerToken = "bearerToken"
     static let code = "code"
     
-    // Data formatter
+    struct AuthConfiguration {
+        let accessKey: String
+        let secretKey: String
+        let redirectURI: String
+        let accessSCope: String
+        let apiURLString: String
+        let authURLString: String
+        let baseURLString: String
+    }
+    static var standard: AuthConfiguration {
+        return AuthConfiguration(accessKey: Constants.accessKey,
+                                 secretKey: Constants.secretKey,
+                                 redirectURI: Constants.redirectURI,
+                                 accessSCope: Constants.accessScope,
+                                 apiURLString: Constants.defaultApiBaseURLString,
+                                 authURLString: Constants.authorizeURLString,
+                                 baseURLString: Constants.baseURLString)
+    }
     
 }
