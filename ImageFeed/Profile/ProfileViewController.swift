@@ -179,6 +179,7 @@ private extension ProfileViewController {
       resetPhotos()
       resetCookies()
       switchToSplashVC()
+        
     }
     
     

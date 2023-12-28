@@ -25,6 +25,7 @@
 		115FC7A42A51B9F4008BB6C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 115FC7A22A51B9F4008BB6C8 /* Main.storyboard */; };
 		115FC7A62A51B9F7008BB6C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 115FC7A52A51B9F7008BB6C8 /* Assets.xcassets */; };
 		115FC7A92A51B9F7008BB6C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 115FC7A72A51B9F7008BB6C8 /* LaunchScreen.storyboard */; };
+		118CAB4F2B3D488900656FF0 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118CAB4E2B3D488900656FF0 /* WebViewPresenter.swift */; };
 		11933E4A2A9DD257005AA90F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11933E492A9DD257005AA90F /* Constants.swift */; };
 		11933E4C2A9DD3B3005AA90F /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11933E4B2A9DD3B3005AA90F /* AuthViewController.swift */; };
 		11933E4F2A9DD4AA005AA90F /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11933E4E2A9DD4AA005AA90F /* WebViewViewController.swift */; };
@@ -60,6 +61,7 @@
 		115FC7A52A51B9F7008BB6C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		115FC7A82A51B9F7008BB6C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		115FC7AA2A51B9F7008BB6C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		118CAB4E2B3D488900656FF0 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		11933E492A9DD257005AA90F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		11933E4B2A9DD3B3005AA90F /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		11933E4E2A9DD4AA005AA90F /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			children = (
 				11933E4B2A9DD3B3005AA90F /* AuthViewController.swift */,
 				11933E4E2A9DD4AA005AA90F /* WebViewViewController.swift */,
+				118CAB4E2B3D488900656FF0 /* WebViewPresenter.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			files = (
 				115F174C2A9EFF7500954786 /* OAuth2TokenStorage.swift in Sources */,
 				11933E4F2A9DD4AA005AA90F /* WebViewViewController.swift in Sources */,
+				118CAB4F2B3D488900656FF0 /* WebViewPresenter.swift in Sources */,
 				115FC7A12A51B9F4008BB6C8 /* ImagesListViewController.swift in Sources */,
 				11FB822F2AA242D4009C79AF /* SplashViewController.swift in Sources */,
 				11FB822C2AA23C74009C79AF /* SnakeCaseJSONDecoder.swift in Sources */,
