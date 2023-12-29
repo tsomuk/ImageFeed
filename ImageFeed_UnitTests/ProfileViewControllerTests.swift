@@ -30,5 +30,15 @@ final class ProfileViewControllerTests: XCTestCase {
       XCTAssertEqual(viewController.loginLabel.text, testUser)
     }
     
-    
+    func testPresenterCallsUpdateAvatar() {
+      // given
+      let testUrl = URL(string: "https://practicum.yandex.ru")!
+
+      // when
+      viewController.updateAvatar(url: testUrl)
+
+      // then
+      XCTAssertTrue(viewController.viewDidUpdateAvatar)
+    }
 }
+
