@@ -28,7 +28,7 @@ final class AuthHelper {
 
 // MARK: - Private properties & methods
 
-private extension AuthHelper {
+extension AuthHelper {
     
   enum WebKeyConstant {
     static let clientId = "client_id"
@@ -45,7 +45,7 @@ private extension AuthHelper {
       URLQueryItem(name: WebKeyConstant.clientId, value: configuration.accessKey),
       URLQueryItem(name: WebKeyConstant.redirectUri, value: configuration.redirectURI),
       URLQueryItem(name: WebKeyConstant.responseType, value: Constants.code),
-      URLQueryItem(name: WebKeyConstant.scope, value: configuration.accessSCope)
+      URLQueryItem(name: WebKeyConstant.scope, value: configuration.accessScope)
     ]
     guard let url = urlComponents.url else {
       preconditionFailure("Incorrect URL: \(String(describing: urlComponents.url))")

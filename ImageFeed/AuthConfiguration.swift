@@ -41,7 +41,7 @@ struct AuthConfiguration {
     let accessKey: String
     let secretKey: String
     let redirectURI: String
-    let accessSCope: String
+    let accessScope: String
     let apiURLString: String
     let authURLString: String
     let baseURLString: String
@@ -50,7 +50,7 @@ struct AuthConfiguration {
         return AuthConfiguration(accessKey: Constants.accessKey,
                                  secretKey: Constants.secretKey,
                                  redirectURI: Constants.redirectURI,
-                                 accessSCope: Constants.accessScope,
+                                 accessScope: Constants.accessScope,
                                  apiURLString: Constants.defaultApiBaseURLString,
                                  authURLString: Constants.authorizeURLString,
                                  baseURLString: Constants.baseURLString)
