@@ -6,9 +6,12 @@
 //
 
 import UIKit
-import Kingfisher
-import WebKit
 
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfilePresenterProtocol? { get set }
+    func updateAvatar(url: URL)
+    func loadProfile(_ profile: Profile?)
+}
 
 final class ProfileViewController: UIViewController {
     
@@ -18,55 +21,21 @@ final class ProfileViewController: UIViewController {
     private var descriptionLabel = UILabel()
     private var logoutButton = UIButton()
     
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
     private var alertPresenter: AlertPresenting?
     private var profileImageServiceObserver: NSObjectProtocol?
-     
+    
+    var presenter: ProfilePresenterProtocol?
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .ypBlack
-        prepareUI()
-        loadProfile()
-        checkAvatar()
+        presenter?.viewDidLoad()
+        setupNotificationObserver()
         alertPresenter = AlertPresenter(viewController: self)
     }
-      
-    
-    func loadProfile() {
-      guard let profile = profileService.profile else {
-        return
-      }
-      self.userNameLabel.text = profile.name
-      self.loginLabel.text = profile.loginName
-      self.descriptionLabel.text = profile.bio
-    }
-    
-    
-    func checkAvatar() {
-        if let url = profileImageService.avatarURL {
-            updateAvatar(url: url)
-        }
-    }
-    
-    func showAlert() {
-      DispatchQueue.main.async { [weak self] in
-        guard let self else { return }
-        let alertModel = AlertModel(
-          title: "Пока, пока!",
-          message: "Уверены, что хотите выйти?",
-          buttonText: "Да",
-          completion: { self.resetAccount() },
-          secondButtonText: "Нет",
-          secondCompletion: { self.dismiss(animated: true) }
-        )
-        self.alertPresenter?.showAlert(for: alertModel)
-      }
-    }
-    
-
     
     private func updateAvatar(notification: Notification) {
         guard
@@ -77,16 +46,6 @@ final class ProfileViewController: UIViewController {
         else { return }
         updateAvatar(url: url)
     }
-    
-    
-    func updateAvatar(url: URL) {
-        userPickImageView.kf.indicatorType = .activity
-        userPickImageView.kf.setImage(
-            with: url,
-            placeholder: UIImage(named: "person.crop.circle.fill")
-        )
-    }
-    
     
     func setupNotificationObserver() {
         profileImageServiceObserver = NotificationCenter.default
@@ -99,8 +58,10 @@ final class ProfileViewController: UIViewController {
             }
     }
     
-    
     func prepareUI() {
+        
+        view.backgroundColor = .ypBlack
+        
         // MARK: - image
         userPickImageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
         userPickImageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
@@ -169,59 +130,42 @@ final class ProfileViewController: UIViewController {
     }
 }
 
-
-private extension ProfileViewController {
-    
-    func resetAccount() {
-      resetToken()
-      resetView()
-      resetImageCache()
-      resetPhotos()
-      resetCookies()
-      switchToSplashVC()
-        
-    }
-    
-    
-    func resetToken() {
-        guard OAuth2TokenStorage.shared.removeToken() else {
-            assertionFailure("Can't remove token")
-            return
-        }
-    }
-    
-    
-    func resetImageCache() {
-//       let cache = ImageCache.default
-//       cache.clearMemoryCache()
-//       cache.clearDiskCache()
-    }
-    
-    func resetView() {
-        self.userNameLabel.text = "User Name"
-        self.loginLabel.text = "@login"
-        self.descriptionLabel.text = "bio info"
-        self.userPickImageView.image = UIImage(systemName: "person.crop.circle.fill")
-    }
-    func resetPhotos() {
-      ImageListService.shared.resetPhotos()
-    }
-
-    func resetCookies() {
-      HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
-      WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
-        records.forEach { record in
-          WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record]) { }
-        }
-      }
-    }
-    
-    
-    
-    func switchToSplashVC() {
-        guard let window = UIApplication.shared.windows.first else { preconditionFailure("Invalid Configuration") }
-        let splashViewController = SplashViewController()
-        window.rootViewController = splashViewController
+extension ProfileViewController {
+func showAlert() {
+    DispatchQueue.main.async { [weak self] in
+        guard let self else { return }
+        let alertModel = AlertModel(
+            title: "Пока, пока!",
+            message: "Уверены, что хотите выйти?",
+            buttonText: "Да",
+            completion: { self.presenter?.resetAccount() },
+            secondButtonText: "Нет",
+            secondCompletion: { self.dismiss(animated: true) }
+        )
+        self.alertPresenter?.showAlert(for: alertModel)
     }
 }
+}
 
+extension ProfileViewController: ProfileViewControllerProtocol {
+    
+    func updateAvatar(url: URL) {
+        userPickImageView.kf.indicatorType = .activity
+        userPickImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "person.crop.circle.fill")
+        )
+    }
+    
+    func loadProfile(_ profile: Profile?) {
+        if let profile {
+            userNameLabel.text = profile.name
+            loginLabel.text = profile.loginName
+            descriptionLabel.text = profile.bio
+        } else {
+            userNameLabel.text = ""
+            loginLabel.text = ""
+            descriptionLabel.text = ""
+        }
+    }
+}
