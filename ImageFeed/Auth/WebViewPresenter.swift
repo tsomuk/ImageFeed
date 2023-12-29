@@ -34,7 +34,7 @@ final class WebViewPresenter {
 
 // MARK: - Private properties & methods
 
-private extension WebViewPresenter {
+extension WebViewPresenter {
   func shouldHideProgress(for value: Float) -> Bool {
     abs(value - 1.0) <= 0.001
   }
