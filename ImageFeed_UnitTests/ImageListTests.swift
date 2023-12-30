@@ -29,5 +29,44 @@ final class ImageListTests: XCTestCase {
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
     
+    func testUpdateTableViewAnimated() {
+      // when
+      _ = viewController.view
+      presenter.updateTableViewAnimated()
+
+      // then
+      XCTAssertTrue(presenter.updateTableViewAnimatedCalled)
+    }
+
+    func testCalcHeightForRowAt() {
+      // when
+      _ = viewController.view
+      let result = presenter.calcHeightForRowAt(indexPath: indexPath)
+
+      // then
+      XCTAssertTrue(presenter.calcHeightForRowAtCalled)
+      XCTAssertTrue(presenter.calcHeightForRowAtGotIndex)
+      XCTAssertEqual(result, CGFloat(100))
+    }
+
+    func testCheckNeedLoadNextPhotos() {
+      // when
+      _ = viewController.view
+      presenter.checkNeedLoadNextPhotos(indexPath: indexPath)
+
+      // then
+      XCTAssertTrue(presenter.checkNeedLoadNextPhotosCalled)
+      XCTAssertTrue(presenter.checkNeedLoadNextPhotosGotIndex)
+    }
+
+    func testReturnPhotoModelAt() {
+      // when
+      _ = viewController.view
+      _ = presenter.returnPhotoModelAt(indexPath: indexPath)
+
+      // then
+      XCTAssertTrue(presenter.returnPhotoModelAtCalled)
+      XCTAssertTrue(presenter.returnPhotoModelAtGotIndex)
+    }
     
 }
