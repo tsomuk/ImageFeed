@@ -83,7 +83,7 @@
 		115FC7A52A51B9F7008BB6C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		115FC7A82A51B9F7008BB6C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		115FC7AA2A51B9F7008BB6C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		118CAB4E2B3D488900656FF0 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
+		118CAB4E2B3D488900656FF0 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WebViewPresenter.swift; path = ../Auth/WebViewPresenter.swift; sourceTree = "<group>"; };
 		118CAB502B3D77E200656FF0 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		11933E492A9DD257005AA90F /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		11933E4B2A9DD3B3005AA90F /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
@@ -241,7 +241,6 @@
 			children = (
 				11933E4B2A9DD3B3005AA90F /* AuthViewController.swift */,
 				11933E4E2A9DD4AA005AA90F /* WebViewViewController.swift */,
-				118CAB4E2B3D488900656FF0 /* WebViewPresenter.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -266,6 +265,7 @@
 		11E7B9992B3F00B2005C8A50 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
+				118CAB4E2B3D488900656FF0 /* WebViewPresenter.swift */,
 				115B8A842B1E30D0001B0009 /* AlertPresenter.swift */,
 				11E7B99A2B3F00CC005C8A50 /* ProfilePresenter.swift */,
 			);

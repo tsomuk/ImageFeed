@@ -32,6 +32,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        prepareUI()
         presenter?.viewDidLoad()
         setupNotificationObserver()
         alertPresenter = AlertPresenter(viewController: self)
