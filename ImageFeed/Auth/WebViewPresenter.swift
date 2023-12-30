@@ -19,6 +19,7 @@ final class WebViewPresenter {
   // MARK: - Private properties
 
   private var webViewWasLoaded = false // to prevent revers progressView animation
+    var a = 0 
 
   // MARK: - Public properties
 
