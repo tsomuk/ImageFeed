@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Kingfisher
+
 
 protocol ImagesListCellDelegate: AnyObject {
   func imagesListCellDidTapLike(_ cell: ImagesListCell)
@@ -16,7 +16,7 @@ final class ImagesListCell: UITableViewCell {
     
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var favoriteButton: UIButton!
-    @IBOutlet weak var dataLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
 
     private let placeholderImage = UIImage(named: "placeholder")
     
@@ -33,6 +33,7 @@ final class ImagesListCell: UITableViewCell {
     
     override func prepareForReuse() {
       super.prepareForReuse()
+        setIsLiked(false)
         cellImage.kf.cancelDownloadTask()
     }
 
@@ -43,41 +44,39 @@ final class ImagesListCell: UITableViewCell {
 
   // MARK: - Methods
 
-  extension ImagesListCell {
-      
-      func setIsLiked(_ isLiked: Bool) {
+extension ImagesListCell {
+    
+    func setIsLiked(_ isLiked: Bool) {
         let likedImage = isLiked ? UIImage(named: "like") : UIImage(named: "no_like")
-          favoriteButton.setImage(likedImage, for: .normal)
-      }
-
+        favoriteButton.setImage(likedImage, for: .normal)
+    }
+    
     func loadCell(from photo: Photo) -> Bool {
-      var status = false
-
-      if let photoDate = photo.createdAt {
-          dataLabel.text = dateFormatter.string(from: photoDate)
-      } else {
-          dataLabel.text = ""
-      }
+        var status = false
         
+        if let photoDate = photo.createdAt {
+            dateLabel.text = dateFormatter.string(from: photoDate)
+        } else {
+            dateLabel.text = ""
+        }
+        favoriteButton.accessibilityIdentifier = "LikeButton"
         setIsLiked(photo.isLiked)
-
-      guard let photoURL = URL(string: photo.thumbImageURL) else { return status }
-
+        guard let photoURL = URL(string: photo.thumbImageURL) else { return status }
         cellImage.kf.indicatorType = .activity
         cellImage.kf.setImage(with: photoURL, placeholder: placeholderImage) { [weak self] result in
-        guard let self else { return }
-        switch result {
-        case .success(_):
-          status = true
-        case .failure(let error):
-            cellImage.image = placeholderImage
-            debugPrint("Error: \(error.localizedDescription)")
+            guard let self else { return }
+            switch result {
+            case .success:
+                status = true
+            case .failure(let error):
+                cellImage.image = placeholderImage
+                debugPrint("Error: \(error.localizedDescription)")
+            }
         }
-      }
-      return status
+        return status
     }
-  }
-    
+}
+
     
     
     

@@ -8,9 +8,9 @@
 import Foundation
 
 protocol ImageListLoading: AnyObject {
-  func fetchPhotoNextPage()
-  func resetPhotos()
-  func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void)
+    func fetchPhotoNextPage()
+    func resetPhotos()
+    func changeLike(photoId: String, indexPath: IndexPath, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void)
 }
 
 
@@ -65,47 +65,48 @@ final class ImageListService {
     extension ImageListService : ImageListLoading {
         
         
-        func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
-            assert(Thread.isMainThread)
-            guard currentTask == nil else { return }
-            let method = isLike ? Constants.postMethodString : Constants.deleteMethodString
-            
-            guard let request = makeLikeRequest(for: photoId, with: method) else {
-                assertionFailure("Invalid request")
-                print(NetworkError.invalidRequest)
-                return
+        func changeLike(photoId: String, indexPath: IndexPath, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
+          assert(Thread.isMainThread)
+          guard currentTask == nil else { return }
+          let method = isLike ? Constants.postMethodString : Constants.deleteMethodString
+
+          guard let request = makeLikeRequest(for: photoId, with: method) else {
+            assertionFailure("Invalid request")
+            print(NetworkError.invalidRequest)
+            return
+          }
+
+          let task = session.objectTask(for: request) { [weak self] (result: Result<LikeResult, Error>) in
+            DispatchQueue.main.async { [weak self] in
+              guard let self else { return }
+              switch result {
+              case .success(let photoLiked):
+                let likedByUser = photoLiked.photo.likedByUser
+                // if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                //  let photo = self.photos[index]
+                //  let newPhoto = Photo(
+                //    id: photo.id,
+                //    size: photo.size,
+                //    createdAt: photo.createdAt,
+                //    welcomeDescription: photo.welcomeDescription,
+                //    thumbImageURL: photo.thumbImageURL,
+                //    largeImageURL: photo.largeImageURL,
+                //    isLiked: likedByUser,
+                //    thumbSize: photo.thumbSize
+                //  )
+                //  self.photos[index] = newPhoto
+                // }
+                self.photos[indexPath.row].isLiked = likedByUser
+                completion(.success(likedByUser))
+                self.currentTask = nil
+
+              case .failure(let error):
+                completion(.failure(error))
+              }
             }
-            
-            let task = session.objectTask(for: request) { [weak self] (result: Result<LikeResult, Error>) in
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
-                    switch result {
-                    case .success(let photoLiked):
-                        let likedByUser = photoLiked.photo.likedByUser
-                        if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
-                            let photo = self.photos[index]
-                            let newPhoto = Photo(
-                                id: photo.id,
-                                size: photo.size,
-                                createdAt: photo.createdAt,
-                                welcomeDescription: photo.welcomeDescription,
-                                thumbImageURL: photo.thumbImageURL,
-                                largeImageURL: photo.largeImageURL,
-                                isLiked: likedByUser,
-                                thumbSize: photo.thumbSize
-                            )
-                            self.photos[index] = newPhoto
-                        }
-                        completion(.success(likedByUser))
-                        self.currentTask = nil
-                        
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                }
-            }
+          }
             currentTask = task
-            task.resume()
+          task.resume()
         }
         
         func resetPhotos() {

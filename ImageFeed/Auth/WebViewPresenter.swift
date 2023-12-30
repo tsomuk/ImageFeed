@@ -18,7 +18,7 @@ public protocol WebViewPresenterProtocol {
 final class WebViewPresenter {
   // MARK: - Private properties
 
-  private var webViewWasLoaded = false 
+  private var webViewWasLoaded = false
 
   // MARK: - Public properties
 
