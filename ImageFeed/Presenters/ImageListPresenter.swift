@@ -8,33 +8,39 @@
 import Foundation
 
 public protocol ImageListPresenterProtocol {
-  var view: ImagesListViewControllerProtocol? { get set }
-  var photos: [Photo] { get set }
-  func viewDidLoad()
-  func updateTableViewAnimated()
-  func calcHeightForRowAt(indexPath: IndexPath) -> CGFloat
-  func checkNeedLoadNextPhotos (indexPath: IndexPath)
+    var view: ImagesListViewControllerProtocol? { get set }
+    func viewDidLoad()
+    var photosTotalCount: Int { get }
+    func updateTableViewAnimated()
+    func calcHeightForRowAt(indexPath: IndexPath) -> CGFloat
+    func checkNeedLoadNextPhotos (indexPath: IndexPath)
+    func returnPhotoModelAt (indexPath: IndexPath) -> Photo?
 }
 
 // MARK: - Class
 
 final class ImageListPresenter {
+    
+    private var imageListService = ImageListService.shared
 
   weak var view: ImagesListViewControllerProtocol?
   var photos: [Photo] = []
-
-  private var imageListService = ImageListService.shared  // to presenter
+    var photosTotalCount: Int {
+         photos.count
+       }
 }
 
 extension ImageListPresenter: ImageListPresenterProtocol {
-  func viewDidLoad() {
-    setupImageListService()
-  }
+    
+    func viewDidLoad() {
+        setupImageListService()
+        view?.setupTableView()
+    }
 
   func updateTableViewAnimated() {
-    let oldCount = photos.count
+    let oldCount = photosTotalCount
     photos = imageListService.photos
-    let newCount = photos.count
+    let newCount = photosTotalCount
 
     if oldCount != newCount {
       view?.tableView.performBatchUpdates {
@@ -47,11 +53,15 @@ extension ImageListPresenter: ImageListPresenterProtocol {
   }
 
   func checkNeedLoadNextPhotos (indexPath: IndexPath) {
-    if indexPath.row + 2 == photos.count {
+    if indexPath.row + 2 == photosTotalCount {
       imageListService.fetchPhotoNextPage()
     }
   }
 
+    func returnPhotoModelAt (indexPath: IndexPath) -> Photo? {
+         photos[indexPath.row]
+       }
+    
   func calcHeightForRowAt(indexPath: IndexPath) -> CGFloat {
     guard let view else { return 0 }
     let imageInsets = (top: CGFloat(4), left: CGFloat(16), bottom: CGFloat(4), right: CGFloat(16))
@@ -64,7 +74,7 @@ extension ImageListPresenter: ImageListPresenterProtocol {
   }
 }
 
-private extension ImageListPresenter {
+extension ImageListPresenter {
   func setupImageListService() {
     imageListService.fetchPhotoNextPage()
     updateTableViewAnimated()

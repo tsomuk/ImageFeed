@@ -8,12 +8,13 @@
 import UIKit
 
 public protocol ImagesListViewControllerProtocol: AnyObject {
-  var presenter: ImageListPresenterProtocol { get set }
-  var tableView: UITableView! { get set }
+    var presenter: ImageListPresenterProtocol { get set }
+    var tableView: UITableView! { get set }
+    func setupTableView()
 }
 
 
-final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
+final class ImagesListViewController: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet var tableView: UITableView!
@@ -31,14 +32,11 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
         return .lightContent
     }
     
-   
-    
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure(presenter)
+        
         presenter.viewDidLoad()
         setupTableView()
         setupNotificationObserver()
@@ -48,21 +46,24 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     //   MARK: - public methods
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == showSingleImageSegueIdentifier {
-            guard
-                let viewController = segue.destination as? SingleImageViewController,
-                let indexPath = sender as? IndexPath
-            else {
-                super.prepare(for: segue, sender: sender)
-                return
-            }
-            viewController.largeImageURL = URL(string: presenter.photos[indexPath.row].largeImageURL)
-        } else {
-            super.prepare(for: segue, sender: sender)
+
+      if segue.identifier == showSingleImageSegueIdentifier {
+        guard
+          let viewController = segue.destination as? SingleImageViewController,
+          let indexPath = sender as? IndexPath
+        else {
+          super.prepare(for: segue, sender: sender)
+          return
         }
+        guard let photo = presenter.returnPhotoModelAt(indexPath: indexPath) else {
+          preconditionFailure("Cannot take photo from the array")
+        }
+        viewController.largeImageURL = URL(string: photo.largeImageURL)
+      } else {
+        super.prepare(for: segue, sender: sender)
+      }
     }
-}
+  }
 
 extension ImagesListViewController: UITableViewDelegate {
     
@@ -75,14 +76,8 @@ extension ImagesListViewController: UITableViewDelegate {
 
 // MARK: - private methods
 
-private extension ImagesListViewController {
-    
-    func configure(_ presenter: ImageListPresenterProtocol) {
-      self.presenter = presenter
-      self.presenter.view = self
-    }
-    
-    
+extension ImagesListViewController: ImagesListViewControllerProtocol {
+        
   func setupTableView() {
     tableView.dataSource = self
     tableView.delegate = self
@@ -107,7 +102,7 @@ private extension ImagesListViewController {
 extension ImagesListViewController: UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      presenter.photos.count
+      presenter.photosTotalCount
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -116,8 +111,10 @@ extension ImagesListViewController: UITableViewDataSource {
       return UITableViewCell()
     }
     cell.delegate = presenter as? any ImagesListCellDelegate
-
-      if cell.loadCell(from: presenter.photos[indexPath.row]) {
+      guard let photo = presenter.returnPhotoModelAt(indexPath: indexPath) else {
+        preconditionFailure("Can't take photo from the array")
+      }
+      if cell.loadCell(from: photo) {
       tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     return cell
