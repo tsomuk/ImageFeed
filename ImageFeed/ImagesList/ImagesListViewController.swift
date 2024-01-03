@@ -36,11 +36,9 @@ final class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         presenter.viewDidLoad()
-//        setupTableView()
         setupNotificationObserver()
-//        view.addSubview(tableView)
+        view.addSubview(tableView)
     }
     
     //   MARK: - public methods
@@ -123,12 +121,20 @@ extension ImagesListViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
       presenter.calcHeightForRowAt(indexPath: indexPath)
   }
-
-  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-      presenter.checkNeedLoadNextPhotos(indexPath: indexPath)
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let visibleRows = tableView.indexPathsForVisibleRows, indexPath == visibleRows.last {
+            presenter.checkNeedLoadNextPhotos(indexPath: indexPath)
+        }
     }
-  }
+}
 
+extension ImagesListViewController: ImagesListCellDelegate {
+  func imagesListCellDidTapLike(_ cell: ImagesListCell) {
+    guard let indexPath = tableView.indexPath(for: cell) else { return }
+    presenter.imagesListCellDidTapLike(cell, indexPath: indexPath)
+  }
+}
 
 
 

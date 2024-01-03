@@ -34,6 +34,7 @@ final class SingleImageViewController : UIViewController {
         super.viewDidLoad()
         alertPresenter = AlertPresenter(viewController: self)
         imageView.image = image
+        backButton.accessibilityIdentifier = "BackButton"
         setupScrollView()
         downloadImage()
         guard let image else { return }
