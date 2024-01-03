@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 protocol AlertPresenting: AnyObject {
   func showAlert(for result: AlertModel)
 }

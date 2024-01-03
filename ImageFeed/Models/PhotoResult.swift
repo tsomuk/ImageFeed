@@ -18,7 +18,6 @@ public struct Photo {
     public let thumbSize: CGSize
 }
 
-
 struct PhotoResult: Codable {
     let id: String
     let width, height: Int

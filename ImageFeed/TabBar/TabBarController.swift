@@ -33,7 +33,6 @@ final class TabBarController: UITabBarController {
     }
 }
 
-
 private extension TabBarController {
   func setupTabBarItem(for viewController: ProfileViewController, image: String) {
     viewController.tabBarItem = UITabBarItem(

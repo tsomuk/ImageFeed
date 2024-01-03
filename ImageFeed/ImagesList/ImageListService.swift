@@ -13,16 +13,11 @@ protocol ImageListLoading: AnyObject {
     func changeLike(photoId: String, indexPath: IndexPath, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void)
 }
 
-
-
 final class ImageListService {
     
     static let shared = ImageListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImageListServiceDidChange")
     static let dateFormatter = ISO8601DateFormatter()
-    
-   
-    
     
     private let session = URLSession.shared
     private let requestBuilder = URLRequestBuilder.shared
@@ -61,86 +56,80 @@ final class ImageListService {
         )
     }
 }
-    
-    extension ImageListService : ImageListLoading {
-        
-        
-        func changeLike(photoId: String, indexPath: IndexPath, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
-          assert(Thread.isMainThread)
-            if currentTask != nil { return }
-            currentTask?.cancel()
-          let method = isLike ? Constants.postMethodString : Constants.deleteMethodString
 
-          guard let request = makeLikeRequest(for: photoId, with: method) else {
+extension ImageListService : ImageListLoading {
+    
+    
+    func changeLike(photoId: String, indexPath: IndexPath, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
+        assert(Thread.isMainThread)
+        if currentTask != nil { return }
+        currentTask?.cancel()
+        let method = isLike ? Constants.postMethodString : Constants.deleteMethodString
+        
+        guard let request = makeLikeRequest(for: photoId, with: method) else {
             assertionFailure("Invalid request")
             print(NetworkError.invalidRequest)
             return
-          }
-
-          let task = session.objectTask(for: request) { [weak self] (result: Result<LikeResult, Error>) in
+        }
+        
+        let task = session.objectTask(for: request) { [weak self] (result: Result<LikeResult, Error>) in
             DispatchQueue.main.async { [weak self] in
-              guard let self else { return }
-              switch result {
-              case .success(let photoLiked):
-                let likedByUser = photoLiked.photo.likedByUser
-                self.photos[indexPath.row].isLiked = likedByUser
-                completion(.success(likedByUser))
-
-              case .failure(let error):
-                completion(.failure(error))
-              }
+                guard let self else { return }
+                switch result {
+                case .success(let photoLiked):
+                    let likedByUser = photoLiked.photo.likedByUser
+                    self.photos[indexPath.row].isLiked = likedByUser
+                    completion(.success(likedByUser))
+                    
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
-          }
-            self.currentTask = task
-          task.resume()
+        }
+        self.currentTask = task
+        task.resume()
+    }
+    
+    func resetPhotos() {
+        photos = []
+    }
+    
+    func fetchPhotoNextPage() {
+        assert(Thread.isMainThread)
+        
+        if currentTask != nil { return }
+        currentTask?.cancel()
+        let nextPage = makeNextPageNumber()
+        
+        guard let request = makePhotoRequest(page: nextPage) else {
+            assertionFailure("Invalid request")
+            debugPrint(NetworkError.invalidRequest)
+            return
         }
         
-        func resetPhotos() {
-            photos = []
-        }
-        
-        func fetchPhotoNextPage() {
-            assert(Thread.isMainThread)
-            
-            if currentTask != nil { return }
-            currentTask?.cancel()
-            let nextPage = makeNextPageNumber()
-            
-            guard let request = makePhotoRequest(page: nextPage) else {
-                assertionFailure("Invalid request")
-                debugPrint(NetworkError.invalidRequest)
-                return
-            }
-            
-            let task = session.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
-                guard let self else { preconditionFailure("Can't make weak link") }
-                DispatchQueue.main.async {
-                  self.currentTask = nil
-                  switch result {
-                  case .success(let photoResults):
+        let task = session.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
+            guard let self else { preconditionFailure("Can't make weak link") }
+            DispatchQueue.main.async {
+                self.currentTask = nil
+                switch result {
+                case .success(let photoResults):
                     var photos: [Photo] = []
                     photoResults.forEach { photo in
-                      photos.append(self.convert(result: photo))
+                        photos.append(self.convert(result: photo))
                     }
                     self.photos += photos
                     self.lastLoadedPage = nextPage
                     NotificationCenter.default.post(
-                      name: ImageListService.didChangeNotification,
-                      object: self,
-                      userInfo: ["Photos": self.photos]
+                        name: ImageListService.didChangeNotification,
+                        object: self,
+                        userInfo: ["Photos": self.photos]
                     )
-                  case .failure(let error):
-                      print(error.localizedDescription)
-                  }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-              }
-            currentTask = task
-            task.resume()
+            }
         }
+        currentTask = task
+        task.resume()
     }
-
-
-
-
-     
-
+}

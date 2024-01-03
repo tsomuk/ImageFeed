@@ -29,8 +29,6 @@ struct ProfileImage: Codable {
 }
 
 
-
-
 // MARK: - Init for ProfileResult
 
 extension Profile {

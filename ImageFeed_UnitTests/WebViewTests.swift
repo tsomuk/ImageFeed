@@ -25,7 +25,6 @@ final class WebViewTests: XCTestCase {
         XCTAssertTrue(presenter.viewDidLoadCalled)
     }
     
-    
     func testPresenterCallsLoadRequest() {
       // given
       let viewController = WebViewViewControllerSpy()
@@ -53,7 +52,6 @@ final class WebViewTests: XCTestCase {
       // then
       XCTAssertFalse(shouldHideProgress)
     }
-    
     
     func testProgressHiddenWhenOne() {
         //given
@@ -98,6 +96,4 @@ final class WebViewTests: XCTestCase {
         //then
         XCTAssertEqual(code, "test code")
     }
-    
-    
 }

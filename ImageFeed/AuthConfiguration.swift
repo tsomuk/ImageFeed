@@ -25,7 +25,6 @@ public enum Constants {
     static let profileRequestPathString = "/me"
     static let photoPathString = "/photos"
     
-
     // HTTP methods
     static let getMethodString = "GET"
     static let postMethodString = "POST"
@@ -34,7 +33,6 @@ public enum Constants {
     // Storage const
     static let bearerToken = "bearerToken"
     static let code = "code"
-
 }
 
 struct AuthConfiguration {
@@ -56,6 +54,5 @@ struct AuthConfiguration {
                                  baseURLString: Constants.baseURLString)
         
     }
-    
 }
 

@@ -132,20 +132,20 @@ final class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController {
-func showAlert() {
-    DispatchQueue.main.async { [weak self] in
-        guard let self else { return }
-        let alertModel = AlertModel(
-            title: "Пока, пока!",
-            message: "Уверены, что хотите выйти?",
-            buttonText: "Да",
-            completion: { self.presenter?.resetAccount() },
-            secondButtonText: "Нет",
-            secondCompletion: { self.dismiss(animated: true) }
-        )
-        self.alertPresenter?.showAlert(for: alertModel)
+    func showAlert() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let alertModel = AlertModel(
+                title: "Пока, пока!",
+                message: "Уверены, что хотите выйти?",
+                buttonText: "Да",
+                completion: { self.presenter?.resetAccount() },
+                secondButtonText: "Нет",
+                secondCompletion: { self.dismiss(animated: true) }
+            )
+            self.alertPresenter?.showAlert(for: alertModel)
+        }
     }
-}
 }
 
 extension ProfileViewController: ProfileViewControllerProtocol {

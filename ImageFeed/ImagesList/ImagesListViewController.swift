@@ -13,7 +13,6 @@ public protocol ImagesListViewControllerProtocol: AnyObject {
     func setupTableView()
 }
 
-
 final class ImagesListViewController: UIViewController {
     // MARK: - Outlets
     
@@ -71,7 +70,6 @@ extension ImagesListViewController: UITableViewDelegate {
     }
 }
 
-
 // MARK: - private methods
 
 extension ImagesListViewController: ImagesListViewControllerProtocol {
@@ -93,7 +91,6 @@ extension ImagesListViewController: ImagesListViewControllerProtocol {
       }
   }
 }
-
 
 // MARK: - UITableViewDataSource
 
@@ -135,7 +132,3 @@ extension ImagesListViewController: ImagesListCellDelegate {
     presenter.imagesListCellDidTapLike(cell, indexPath: indexPath)
   }
 }
-
-
-
-
