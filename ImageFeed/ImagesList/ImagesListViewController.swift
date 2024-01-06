@@ -37,7 +37,6 @@ final class ImagesListViewController: UIViewController {
         super.viewDidLoad()
         presenter.viewDidLoad()
         setupNotificationObserver()
-        view.addSubview(tableView)
     }
     
     //   MARK: - public methods

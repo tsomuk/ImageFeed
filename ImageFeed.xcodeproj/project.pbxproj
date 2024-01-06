@@ -108,6 +108,7 @@
 		11933E4E2A9DD4AA005AA90F /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		11AACC292B276CD00042D394 /* ImageListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListService.swift; sourceTree = "<group>"; };
 		11AACC2B2B2773650042D394 /* PhotoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResult.swift; sourceTree = "<group>"; };
+		11BC8BE02B498684003E3464 /* ImageFeed.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = ImageFeed.xctestplan; sourceTree = "<group>"; };
 		11DE38A82A76DAD400224CFF /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		11E7B9932B3EE7CD005C8A50 /* WebViewViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewControllerSpy.swift; sourceTree = "<group>"; };
 		11E7B9952B3EFF4F005C8A50 /* ProfileViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerTests.swift; sourceTree = "<group>"; };
@@ -223,6 +224,7 @@
 		115FC7902A51B9F4008BB6C8 = {
 			isa = PBXGroup;
 			children = (
+				11BC8BE02B498684003E3464 /* ImageFeed.xctestplan */,
 				115FC79B2A51B9F4008BB6C8 /* ImageFeed */,
 				113BDA682B3EE36500D9BA32 /* ImageFeed_UnitTests */,
 				118DAEB12B408D7B00B29637 /* ImageFeedUITests */,

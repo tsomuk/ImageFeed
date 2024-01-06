@@ -59,16 +59,22 @@ final class ImageListService {
 
 extension ImageListService : ImageListLoading {
     
-    
     func changeLike(photoId: String, indexPath: IndexPath, isLike: Bool, _ completion: @escaping (Result<Bool, Error>) -> Void) {
-        assert(Thread.isMainThread)
-        if currentTask != nil { return }
+        guard Thread.isMainThread else {
+            assertionFailure("changeLike должен вызываться из главного потока")
+            return
+        }
+
+        guard currentTask == nil else {
+            return
+        }
+
         currentTask?.cancel()
+
         let method = isLike ? Constants.postMethodString : Constants.deleteMethodString
-        
+
         guard let request = makeLikeRequest(for: photoId, with: method) else {
             assertionFailure("Invalid request")
-            print(NetworkError.invalidRequest)
             return
         }
         

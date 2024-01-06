@@ -25,7 +25,7 @@ public protocol ImageListPresenterProtocol {
 
 final class ImageListPresenter {
     
-    private var imageListService = ImageListService.shared
+    private let imageListService = ImageListService.shared
     
     weak var view: ImagesListViewControllerProtocol?
     var photos: [Photo] = []
@@ -108,7 +108,7 @@ extension ImageListPresenter: ImageListPresenterProtocol {
                 UIBlockingProgressHUD.dismiss()
             case .failure(let error):
                 UIBlockingProgressHUD.dismiss()
-                print("\(error.localizedDescription)")
+                
             }
         }
     }

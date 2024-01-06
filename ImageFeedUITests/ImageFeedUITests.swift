@@ -24,6 +24,7 @@ final class ImageFeedUITests: XCTestCase {
     }
 
     func testAuth() throws {
+        
       XCTAssertTrue(app.buttons["Authenticate"].waitForExistence(timeout: 3))
       app.buttons["Authenticate"].tap()
 
@@ -85,11 +86,11 @@ final class ImageFeedUITests: XCTestCase {
       XCTAssertTrue(app.tabBars.buttons.element(boundBy: 1).waitForExistence(timeout: 3))
       app.tabBars.buttons.element(boundBy: 1).tap()
 
-      XCTAssertTrue(app.buttons["ExitButton"].waitForExistence(timeout: 3))
+      XCTAssertTrue(app.buttons["logoutButton"].waitForExistence(timeout: 3))
       XCTAssertTrue(app.staticTexts[TestCredentials.name].exists)
       XCTAssertTrue(app.staticTexts[TestCredentials.login].exists)
 
-      app.buttons["ExitButton"].tap()
+      app.buttons["logoutButton"].tap()
 
       XCTAssertTrue(app.alerts["Alert"].waitForExistence(timeout: 3))
       app.alerts["Alert"].buttons["Да"].tap()
