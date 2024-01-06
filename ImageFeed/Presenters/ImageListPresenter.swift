@@ -108,7 +108,6 @@ extension ImageListPresenter: ImageListPresenterProtocol {
                 UIBlockingProgressHUD.dismiss()
             case .failure(let error):
                 UIBlockingProgressHUD.dismiss()
-                
             }
         }
     }
