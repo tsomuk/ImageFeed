@@ -52,10 +52,10 @@ extension ProfileService: ProfileLoading {
     }
 
     let session = URLSession.shared
-    currentTask = session.objectTask(for: request) {
+    let task = session.objectTask(for: request) {
       [weak self] (result: Result<ProfileResult, Error>) in
 
-      guard let self else { preconditionFailure("Cannot make weak link") }
+      guard let self else { preconditionFailure("Can't make weak link") }
 
       self.currentTask = nil
 
@@ -68,5 +68,7 @@ extension ProfileService: ProfileLoading {
         completion(.failure(error))
       }
     }
+      self.currentTask = task
+      task.resume()
   }
 }

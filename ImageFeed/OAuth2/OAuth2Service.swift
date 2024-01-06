@@ -57,7 +57,6 @@ private extension OAuth2Service {
     }
 }
 
-
 // MARK: - OAuth2Service - fetchAuthToken
 
 extension OAuth2Service {
@@ -91,9 +90,6 @@ extension OAuth2Service {
                 completion(.failure(error))
             }
         }
-        
-        
-        
         
         func makeRequest(code: String) -> URLRequest? {
             

@@ -129,7 +129,7 @@ private extension SplashViewController {
             guard let self else { preconditionFailure("Can't fetch auth token") }
             
             switch authResult {
-            case .success(_):
+            case .success:
                 self.fetchProfile(completion: {
                     UIBlockingProgressHUD.dismiss()
                 })
@@ -148,7 +148,7 @@ private extension SplashViewController {
             switch profileResult {
             case .success(let profile):
                 let userName = profile.username
-                debugPrint("Test Print run fetchProfileImage \(userName)")
+                debugPrint( "Test Print run fetchProfileImage \(userName)")
                 self.fetchProfileImage(userName: userName)
                 self.switchToTabBarController()
             case .failure(let error):
